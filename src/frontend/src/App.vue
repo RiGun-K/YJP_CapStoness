@@ -21,9 +21,8 @@ export default {
 }
 </script>
 
-
-<!--@import 'bootstrap/scss/bootstrap';-->
 <style lang="scss">
+@import 'bootstrap/scss/bootstrap';
 html,body{padding:0; margin:0;}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
