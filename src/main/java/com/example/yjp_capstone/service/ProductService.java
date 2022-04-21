@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 //@RequiredArgsConstructor
 public class ProductService {
-    private final com.example.capstone.repository.Member.MemberRepository MemberRepository;
+    private final com.example.yjp_capstone.repository.Member.MemberRepository MemberRepository;
     private MemberRepository memberRepository;
 
     private MenuRepository menuRepository;

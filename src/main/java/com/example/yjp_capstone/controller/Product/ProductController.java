@@ -194,7 +194,7 @@ public class ProductController {
 //
 
 
-            menu.setMID(memberRepository.findByMID("Rigun").get(0));
+            menu.setMID(memberRepository.findByMID("rigun").get(0));
 //
 //        Menu menu = new Menu(menuDTO.getMenuname(), menuDTO.getPrice(), menuDTO.getEx(), menuDTO.getSavedTime(), menuDTO.getStock(), menuDTO.getOrigFilename(), menuDTO.getFilename(), menuDTO.getFilePath(), kind.get(), member.get(0));
 //        System.out.println(menu);
