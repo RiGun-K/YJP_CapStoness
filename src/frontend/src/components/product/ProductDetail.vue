@@ -1,6 +1,7 @@
 <template>
   <ProductMain />
-  <img src="@/assets/camp3.jpg" class="img-fluid" alt="...">
+<!--  <img src="@/assets/camp3.jpg" class="img-fluid" alt="...">-->
+  <img :src='pic' class="img-fluid" alt="...">
   <div class="mt-4">
       <b-card-text>
         <div class="content-detail-list">
@@ -21,6 +22,7 @@
 <script>
 import axios from "axios";
 import ProductMain from "@/components/product/ProductMain";
+import pic from '@/assets/camp2.jpg'
 // import require from require
 
 export default {
@@ -36,6 +38,7 @@ export default {
       content: [],
       image: require('@/assets/camp1.jpg'),
       // file: this.content.origFilename,
+      pic: pic,
     }
 
   },

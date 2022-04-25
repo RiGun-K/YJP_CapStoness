@@ -227,7 +227,7 @@ public class ProductController {
             String origFilename = uploadFile.getOriginalFilename();
             String filename = new MD5Generator(origFilename).toString();
             /* 실행되는 위치의 'files' 폴더에 파일이 저장 */
-            String savePath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\images";
+            String savePath = System.getProperty("user.dir") + "\\src\\frontend\\src\\assets";
             /* 파일이 저장되는 폴더가 없으면 폴더 생성 */
             if (!new File(savePath).exists()) {
                 try {
