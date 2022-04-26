@@ -110,12 +110,13 @@ export default {
   methods: {
     myDataList() {
       this.id = this.$route.params.menuid;
-      console.log(this.id);
       axios.get('http://localhost:9002/api/myProduct_detail/' + this.id)
         .then(res => {
           console.log(res.data);
           this.myContent = res.data;
           console.log(this.myContent.mid.mcode)
+          console.log("메뉴번호는" + this.id);
+          console.log("회원번호는" + this.mid);
         })
         .catch(e => {
           console.log(e);
