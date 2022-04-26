@@ -10,57 +10,53 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long MCode;
 
-    @Column(length = 50)
+    @Column
     private String MID;
-    @Column(length = 50)
+    @Column
     private String MPass;
-    @Column(length = 50)
-
+    @Column
     private String MNick;
-    @Column(length = 50)
 
+    @Column
     private String MPH;
-    @Column(length = 50)
+    @Column
     private String MMail;
-    @Column(length = 50)
-    private String Mzc;
-    @Column(length = 50)
-    private String MAdd;
-    @Column(length = 50)
 
+    @Column
+    private String MZadd;
+    @Column
+    private String MRadd;
+    @Column
+    private String MAdd;
+
+    @Column
     private String MSC;
-    @Column(length = 50)
+    @Column
     private String MSD;
-    @Column(length = 50)
+    @Column
     private String MLD;
     @Column
     private String mname;
 
 
-    public Member(long MCode, String MID, String MPass, String MMail, String MNick, String MPH, String mzc, String MAdd, String MSC, String MSD, String MLD) {
+    public Member(long MCode, String MID, String MPass, String MNick, String MPH, String MMail, String MZadd, String MRadd, String MAdd, String MSC, String MSD, String MLD, String mname) {
         this.MCode = MCode;
         this.MID = MID;
         this.MPass = MPass;
-        this.MMail = MMail;
         this.MNick = MNick;
         this.MPH = MPH;
-        Mzc = mzc;
+        this.MMail = MMail;
+        this.MZadd = MZadd;
+        this.MRadd = MRadd;
         this.MAdd = MAdd;
         this.MSC = MSC;
         this.MSD = MSD;
         this.MLD = MLD;
+        this.mname = mname;
     }
 
     public Member() {
 
-    }
-
-    public String getMname() {
-        return mname;
-    }
-
-    public void setMname(String mname) {
-        this.mname = mname;
     }
 
     public long getMCode() {
@@ -87,14 +83,6 @@ public class Member {
         this.MPass = MPass;
     }
 
-    public String getMMail() {
-        return MMail;
-    }
-
-    public void setMMail(String MMail) {
-        this.MMail = MMail;
-    }
-
     public String getMNick() {
         return MNick;
     }
@@ -111,12 +99,28 @@ public class Member {
         this.MPH = MPH;
     }
 
-    public String getMzc() {
-        return Mzc;
+    public String getMMail() {
+        return MMail;
     }
 
-    public void setMzc(String mzc) {
-        Mzc = mzc;
+    public void setMMail(String MMail) {
+        this.MMail = MMail;
+    }
+
+    public String getMZadd() {
+        return MZadd;
+    }
+
+    public void setMZadd(String MZadd) {
+        this.MZadd = MZadd;
+    }
+
+    public String getMRadd() {
+        return MRadd;
+    }
+
+    public void setMRadd(String MRadd) {
+        this.MRadd = MRadd;
     }
 
     public String getMAdd() {
@@ -149,5 +153,13 @@ public class Member {
 
     public void setMLD(String MLD) {
         this.MLD = MLD;
+    }
+
+    public String getMname() {
+        return mname;
+    }
+
+    public void setMname(String mname) {
+        this.mname = mname;
     }
 }

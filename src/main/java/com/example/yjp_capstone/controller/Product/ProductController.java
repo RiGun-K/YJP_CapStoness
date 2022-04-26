@@ -197,7 +197,7 @@ public class ProductController {
 //
 
 
-            menu.setMID(memberRepository.findByMID("rigun").get(0));
+            menu.setMID(memberRepository.findByMID("rigun").get());
 //
 //        Menu menu = new Menu(menuDTO.getMenuname(), menuDTO.getPrice(), menuDTO.getEx(), menuDTO.getSavedTime(), menuDTO.getStock(), menuDTO.getOrigFilename(), menuDTO.getFilename(), menuDTO.getFilePath(), kind.get(), member.get(0));
 //        System.out.println(menu);
@@ -257,7 +257,7 @@ public class ProductController {
         }
 
         System.out.println(menuDTO.getMid());
-        List<Member> member = memberRepository.findByMID(menuDTO.getMid());
+        Optional<Member> member = memberRepository.findByMID(menuDTO.getMid());
 
 
         Optional<Kind> kind = kindRepository.findById(menuDTO.getKindid());
@@ -267,7 +267,7 @@ public class ProductController {
             menuDTO.setSavedTime(LocalDateTime.now());
 
 
-        Menu menu = new Menu(menuDTO.getMenuname(), menuDTO.getPrice(), menuDTO.getEx(), menuDTO.getSavedTime(), menuDTO.getStock(), menuDTO.getOrigFilename(), menuDTO.getFilename(), menuDTO.getFilePath(), kind.get(), member.get(0));
+        Menu menu = new Menu(menuDTO.getMenuname(), menuDTO.getPrice(), menuDTO.getEx(), menuDTO.getSavedTime(), menuDTO.getStock(), menuDTO.getOrigFilename(), menuDTO.getFilename(), menuDTO.getFilePath(), kind.get(), member.get());
         System.out.println(menu);
 
         menuRepository.save(menu);

@@ -8,7 +8,7 @@ public class payStorageBox {
     private long storageBoxCode;
     private LocalDateTime useStorageStartTime;
     private LocalDateTime useStorageEndTime;
-
+    private int price;
 
     public payStorageBox() {
     }
@@ -18,11 +18,12 @@ public class payStorageBox {
         this.storageBoxCode = storageBoxCode;
     }
 
-    public payStorageBox(String userId, long storageBoxCode, LocalDateTime useStorageStartTime, LocalDateTime useStorageEndTime) {
+    public payStorageBox(String userId, long storageBoxCode, LocalDateTime useStorageStartTime, LocalDateTime useStorageEndTime, int price) {
         this.userId = userId;
         this.storageBoxCode = storageBoxCode;
         this.useStorageStartTime = useStorageStartTime;
         this.useStorageEndTime = useStorageEndTime;
+        this.price = price;
     }
 
     public String getUserId() {
@@ -55,5 +56,13 @@ public class payStorageBox {
 
     public void setUseStorageEndTime(LocalDateTime useStorageEndTime) {
         this.useStorageEndTime = useStorageEndTime;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

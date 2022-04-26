@@ -18,7 +18,7 @@
           <label for="id">회사명</label>
         </h3>
         <span class="box int_id">
-                        <input type="password" v-model="CName" id="id" placeholder="회사명 입력" class="int" maxlength="20">
+                        <input type="text" v-model="CName" id="id" placeholder="회사명 입력" class="int" maxlength="20">
                     </span>
         <span class="error_next_box"></span>
       </div>
@@ -29,29 +29,30 @@
         </h3>
 
         <span class="box int_id">
-                        <input type="password" v-model="CEO" id="id" placeholder="필수입력" class="int" maxlength="20">
+                        <input type="text" v-model="CEO" id="id" placeholder="필수입력" class="int" maxlength="20">
                     </span>
         <span class="error_next_box"></span>
 
       </div>
       <div>
         <h3 class="join_title">
-          <label for="pswd2">우편주소</label>
+          <label for="pswd2">주소</label>
         </h3>
         <span class="input-group mb-3">
-        <input type="text" v-model="CZC" class="form-control" placeholder="우편주소 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">우편주소검색</button>
+        <input type="text" v-model="CZadd" class="form-control" placeholder="우편주소 입력" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="zcGet">우편주소검색</button>
         </span>
 
       </div>
-
       <div>
-        <h3 class="join_title">
-          <label for="pswd2">상세주소</label>
-        </h3>
-        <span class="box int_email">
-                        <input type="text" v-model="CAdd" id="email" class="int" maxlength="100" placeholder="필수입력">
-                    </span>
+        <span class="input-group mb-3">
+                        <input type="text" v-model="CRadd" id="email" class="form-control" maxlength="100" placeholder="도로명입력" readonly>
+        </span>
+      </div>
+      <div>
+        <span class="input-group mb-3">
+                        <input type="text" v-model="CAdd" id="email" class="form-control" maxlength="100" placeholder="상세주소">
+        </span>
         <span class="error_next_box">상세주소를 다시 확인해주세요.</span>
       </div>
 
@@ -70,18 +71,26 @@
           <label for="phoneNo">전화번호</label>
         </h3>
         <span class="box int_mobile">
-                        <input type="tel" v-model="Cph" id="mobile" class="int" maxlength="16" placeholder="전화번호 입력">
+                        <input type="tel" v-model="Cph" id="mobile" class="int" maxlength="11" placeholder="전화번호 입력"
+                               oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');">
                     </span>
         <span class="error_next_box"></span>
       </div>
 
       <div>
         <h3 class="join_title">
-          <label for="phoneNo">이메일</label>
+          <label for="email">이메일</label>
         </h3>
-        <span class="box int_mobile">
-                        <input type="tel" v-model="CEmail" id="mobile" class="int" maxlength="16" placeholder="이메일 입력">
-                    </span>
+        <span class="input-group mb-3">
+          <input type="text" v-model="CEmail" class="form-control" placeholder="이메일 입력" aria-label="Recipient's username"
+                 aria-describedby="button-addon2" :disabled="emailAuthBoolean">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="emailSend" :disabled="emailAuthBoolean">전송</button>
+        </span>
+        <span class="input-group mb-3">
+          <input type="text" v-model="CEmailAuthInput" class="form-control" placeholder="인증번호입력" aria-label="Recipient's username"
+                 aria-describedby="button-addon2" :disabled="emailAuthBoolean">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="mailAuthCheck" :disabled="emailAuthBoolean">인증확인</button>
+        </span>
         <span class="error_next_box"></span>
 
       </div>
@@ -107,12 +116,16 @@ export default {
       CCode:'',
       CName:'',
       CEO:'',
-      CZC:'',
+      CZadd:'',
+      CRadd:'',
       CAdd:'',
       Chp:'',
       Cph:'',
       CEmail:'',
-      cCheck:false
+      cCheck:false,
+      CEmailAuthInput:'',
+      emailAuthBoolean:false,
+      emailAuth:''
     }
   },methods:{
     Exit(){
@@ -124,7 +137,8 @@ export default {
           CCode:this.CCode,
           CName:this.CName,
           CEO:this.CEO,
-          CZC:this.CZC,
+          CZadd:this.CZadd,
+          CRadd:this.CRadd,
           CAdd:this.CAdd,
           Chp:this.Chp,
           Cph:this.Cph,
@@ -149,7 +163,7 @@ export default {
         return false
       }else if(this.CEO == ''){
         return false
-      }else if(this.CZC == ''){
+      }else if(this.CZadd == ''){
         return false
       }else if(this.CAdd == ''){
         return false
@@ -162,6 +176,14 @@ export default {
       }else{
         return true
       }
+    },
+    zcGet() {
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          this.CZadd = data.zonecode;
+          this.CRadd = data.roadAddress;
+        }
+      }).open({popupKey: '주소검색'})
     },
     codeCheck(){
       axios.post("api/companyCodeCheck",{
@@ -178,9 +200,28 @@ export default {
       }).catch((err) =>{
         console.log(err)
       })
+    },
+    emailSend(){
+      axios.post("http://localhost:9002/api/mailCheck",{
+        email:this.CEmail
+      }).then((res)=>{
+        this.emailAuth = res.data
+        alert("인증코드가 발송되었습니다")
+      }).catch((err)=>{
+        console.log(err)
+        console.log("fail")
+        alert("이메일을 다시 확인해주세요")
+      })
+    },
+    mailAuthCheck(){
+      if(this.emailAuth == this.CEmailAuthInput){
+        this.emailAuthBoolean=true
+        alert("인증번호가 맞습니다")
+      }else{
+        alert("인증번호가 다릅니다")
+      }
     }
   }
-
 }
 </script>
 

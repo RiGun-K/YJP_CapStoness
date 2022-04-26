@@ -152,18 +152,6 @@ export default {
 		},
 		insert: function () {
 			const url = '/api/insertDetailPlan';
-			// const data = {
-			// 	detailStart: this.detailStart,
-			// 	detailEnd: this.detailEnd,
-			// 	detailMemo: this.detailMemo,
-			// 	detailDay: this.dateIndex,
-			// 	planCode: this.$store.state.planCode,
-			// };
-			console.log(this.detailStart);
-			console.log(this.detailEnd);
-			console.log(this.detailMemo);
-			console.log(this.dateIndex);
-			console.log(this.$store.state.planCode);
 			axios
 				.put(url, {
 					detailStart: this.detailStart,

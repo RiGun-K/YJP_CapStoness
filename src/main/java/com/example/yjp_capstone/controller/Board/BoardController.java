@@ -29,8 +29,8 @@ public class BoardController {
     @PostMapping("/Writing")
     public Writer addWriter(@RequestBody BoardDTO boardDTO) {
         System.out.println(boardDTO.getMid());
-        List<Member> member = memberRepository.findByMID(boardDTO.getMid());
-        Writer writer = new Writer(boardDTO.getTitle(), boardDTO.getContent(), member.get(0));
+        Optional<Member> member = memberRepository.findByMID(boardDTO.getMid());
+        Writer writer = new Writer(boardDTO.getTitle(), boardDTO.getContent(), member.get());
         boardRepository.save(writer);
         return writer;
     }

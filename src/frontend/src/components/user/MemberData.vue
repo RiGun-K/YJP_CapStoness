@@ -2,18 +2,16 @@
   <div id="wrapper">
     <div id="content">
       <br><br>
-      <h2>멤버데이터 입니다</h2>
+      <h2>정보수정 입니다</h2>
       <div>
         <br>
         <h3 class="join_title">
           <label for="id">아이디</label>
         </h3>
         <span class="box int_id">
-                        <input type="text" disabled="disabled" v-model="MID" id="id" placeholder="아이디 입력" class="int" maxlength="20">
+                        <input type="text" readonly v-model="MID" id="id" placeholder="아이디 입력" class="int" maxlength="20">
                     </span>
         <span class="error_next_box"></span>
-        <!--    <label>아이디 : </label>-->
-        <!--    <input type="text" disabled="disabled" v-model="MID">-->
         <div>
           <h3 class="join_title">
             <label for="id">닉네임</label>
@@ -25,66 +23,66 @@
         </span>
           <span class="error_next_box"></span>
         </div>
-        <!--    <label>닉네임 : </label>-->
-        <!--    <input type="text" v-model="MNick">-->
-        <!--    <button name="NICH" @click="nameCheck" :disabled="btnNch">중복확인</button>-->
-        <!--    <br/><br/>-->
         <div>
           <h3 class="join_title">
-            <label for="pswd2">우편주소</label>
+            <label for="zCode">주소</label>
           </h3>
           <span class="input-group mb-3">
-        <input type="text" v-model="MZC" class="form-control" placeholder="우편주소 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">우편주소검색</button>
+        <input type="text" v-model="MZadd" class="form-control" placeholder="우편주소"
+               aria-label="Recipient's username" aria-describedby="button-addon2" readonly="true">
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="zcGet">우편주소검색</button>
         </span>
         </div>
-        <!--    <label>우편주소 : </label>-->
-        <!--    <input type="text" v-model="MZC">-->
-        <!--    <button name="ZCS" >우편주소검색</button>-->
-        <!--    <br/><br/>-->
+
         <div>
-          <h3 class="join_title">
-            <label for="email">상세주소</label>
-          </h3>
-          <span class="box int_email">
-                        <input type="text" v-model="MAdd" id="email" class="int" maxlength="100" placeholder="필수입력">
-                    </span>
+          <span class="input-group mb-3">
+                        <input type="text" v-model="MRadd" id="email" class="form-control" maxlength="100" placeholder="도로명주소" readonly>
+          </span>
+          <span class="error_next_box">도로명주소를 다시 확인해주세요.</span>
+        </div>
+
+        <div>
+          <span class="input-group mb-3">
+                        <input type="text" v-model="MAdd" id="email" class="form-control" maxlength="100" placeholder="상세주소">
+          </span>
           <span class="error_next_box">상세주소를 다시 확인해주세요.</span>
         </div>
 
-        <!--    <label>상세주소 : </label>-->
-        <!--    <input type="text" v-model="MAdd">-->
-        <!--    <br/><br/>-->
-
         <div>
           <h3 class="join_title">
-            <label for="phoneNo">전화번호</label>
+            <label for="email">전화번호</label>
           </h3>
-          <span class="box int_mobile">
-                        <input type="text" v-model="MPH" id="mobile" class="int" maxlength="16" placeholder="전화번호 입력">
-                    </span>
+          <span class="input-group mb-3">
+          <input type="text" v-model="MPH" class="form-control" placeholder="전화번호 입력" aria-label="Recipient's username" maxlength="11"
+                 aria-describedby="button-addon2" :disabled="authCheck" oninput="javascript: this.value = this.value.replace(/[^0-9]/g, '');">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="phSend" :disabled="authCheck">전송</button>
+        </span>
+          <span class="input-group mb-3">
+          <input type="text" v-model="clientAuth" class="form-control" placeholder="인증번호입력" aria-label="Recipient's username"
+                 aria-describedby="button-addon2" :disabled="authCheck">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="phAuthCheck" :disabled="authCheck">인증확인</button>
+        </span>
           <span class="error_next_box"></span>
         </div>
 
 
-        <!--    <label>전화번호 : </label>-->
-        <!--    <input type="text" v-model="MPH">-->
-        <!--    <br/><br/>-->
-
         <div>
           <h3 class="join_title">
-            <label for="phoneNo">이메일</label>
+            <label for="email">이메일</label>
           </h3>
-          <span class="box int_mobile">
-                        <input type="text" v-model="MEmail" id="mobile" class="int" maxlength="16" placeholder="이메일 입력">
-                    </span>
+          <span class="input-group mb-3">
+          <input type="text" v-model="MEmail" class="form-control" placeholder="이메일 입력" aria-label="Recipient's username"
+                 aria-describedby="button-addon2" :disabled="emailAuthBoolean">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="emailSend" :disabled="emailAuthBoolean">전송</button>
+        </span>
+          <span class="input-group mb-3">
+          <input type="text" v-model="MEmailAuthInput" class="form-control" placeholder="인증번호입력" aria-label="Recipient's username"
+                 aria-describedby="button-addon2" :disabled="emailAuthBoolean">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="mailAuthCheck" :disabled="emailAuthBoolean">인증확인</button>
+        </span>
           <span class="error_next_box"></span>
 
         </div>
-
-        <!--    <label>이메일 : </label>-->
-        <!--    <input type="text" v-model="MEmail">-->
-        <!--    <br/><br/>-->
         <br>
         <div class="btn_area">
           <button type="button" @click="update" id="btnJoin">
@@ -95,9 +93,6 @@
 
           </button>
         </div>
-        <!--    <button name="Update" @click="update">수정</button>-->
-        <!--    <br/><br/>-->
-        <!--    <button name="Delete" @click="deleteMem">탈퇴</button>-->
       </div>
     </div>
   </div>
@@ -113,13 +108,20 @@ export default {
     return{
       MID: store.getters.getLoginState.loginState,
       MNick:'',
-      MZC:'',
+      MZadd:'',
+      MRadd:'',
       MAdd:'',
       MPH:'',
       MEmail:'',
       Member:null,
       nickCh:false,
-      btnNch:true
+      btnNch:true,
+      emailAuth:'',
+      MEmailAuthInput:'',
+      emailAuthBoolean:false,
+      clientAuth:'',
+      serverAuth:'',
+      authCheck:false
     }
   },
   methods:{
@@ -128,7 +130,8 @@ export default {
         axios.post("api/memberUpdate",{
           MID:this.MID,
           MNick:this.MNick,
-          MZC:this.MZC,
+          MZadd:this.MZadd,
+          MRadd:this.MRadd,
           MAdd:this.MAdd,
           MPH:this.MPH,
           MEmail:this.MEmail
@@ -145,6 +148,14 @@ export default {
       }else{
         alert("항목을 다시 확인해주세요.")
       }
+    },
+    zcGet() {
+      new window.daum.Postcode({
+        oncomplete: (data) => {
+          this.MZC = data.zonecode;
+          this.roadAddress = data.roadAddress;
+        }
+      }).open({popupKey: '주소검색'})
     },
     empityCheck() {
       if (this.MNick === '') {
@@ -198,6 +209,46 @@ export default {
       }else{
         alert("닉네임을 입력하세요")
       }
+    },
+    emailSend(){
+      axios.post("http://localhost:9002/api/mailCheck",{
+        email:this.MEmail
+      }).then((res)=>{
+        this.emailAuth = res.data
+        alert("인증코드가 발송되었습니다")
+      }).catch((err)=>{
+        console.log(err)
+        console.log("fail")
+        alert("이메일을 다시 확인해주세요")
+      })
+    },
+    mailAuthCheck(){
+      if(this.emailAuth == this.MEmailAuthInput){
+        this.emailAuthBoolean=true
+        alert("인증번호가 맞습니다")
+      }else{
+        alert("인증번호가 다릅니다")
+      }
+    },
+    phSend(){
+      axios.post("/api/phCheck",{
+        MPH:this.MPH
+      }).then((res)=>{
+        console.log(res)
+        this.serverAuth = res.data
+        alert("인증번호가 발송되었습니다")
+      }).catch((err)=>{
+        console.log(err)
+        alert("전화번호를 다시 확인해주세요")
+      })
+    },
+    phAuthCheck(){
+      if(this.serverAuth == this.clientAuth){
+        alert("인증되었습니다")
+        this.authCheck = true
+      }else{
+        alert("인증번호가 다릅니다 다시 확인해주세요")
+      }
     }
   },
   mounted() {
@@ -206,7 +257,8 @@ export default {
     }).then((res)=>{
       this.Member = res.data
       this.MNick = this.Member.mnick
-      this.MZC = this.Member.mzc
+      this.MZadd = this.Member.mzadd
+      this.MRadd = this.Member.mradd
       this.MAdd = this.Member.madd
       this.MPH = this.Member.mph
       this.MEmail = this.Member.mmail

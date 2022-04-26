@@ -36,11 +36,57 @@ public class StorageController {
     private UseStorageBoxRepository useStorageBoxRepository;
 
     @PostMapping("/postStorage")
-    public Result postStorage(@RequestBody Storage storage) {
-        Optional<Storage> findStrg = storageRepository.findByStorageName(storage.getStorageName());
+    public Result postStorage(@RequestBody StorageData storageData) {
+        Storage storage = storageData.getStorage();
+        Box box = storageData.getBox();
 
-        if (!findStrg.isPresent()) {
+        Optional<Storage> storageChk = storageRepository.findByStorageName(storage.getStorageName());
+        if (!storageChk.isPresent()) {
+            // 보관소 추가
             storageRepository.save(storage);
+
+            Optional<Storage> strgName = storageRepository.findByStorageName(box.getStorageName());
+            Storage strg = strgName.get();
+            //보관함 추가
+            String storageBoxName;
+            String storageBoxType;
+            String storageBoxState;
+
+            for (int i = 0; i < box.getSmall(); i++) {
+                storageBoxName = "S"+(i+1);
+                storageBoxType = "0";
+                storageBoxState = "0";
+
+                StorageBox storageBoxSmall = new StorageBox(strg,storageBoxName,storageBoxType,33000,storageBoxState);
+                storageBoxRepository.save(storageBoxSmall);
+
+                storageBoxName = "0";
+                storageBoxType = "0";
+                storageBoxState = "0";
+            }
+            for (int i = 0; i < box.getMedium(); i++) {
+                storageBoxName = "M"+(i+1);
+                storageBoxType = "0";
+                storageBoxState = "0";
+                StorageBox storageBoxSmall = new StorageBox(strg,storageBoxName,storageBoxType,45000,storageBoxState);
+                storageBoxRepository.save(storageBoxSmall);
+
+                storageBoxName = "0";
+                storageBoxType = "0";
+                storageBoxState = "0";
+            }
+            for (int i = 0; i < box.getLarge(); i++) {
+                storageBoxName = "L"+(i+1);
+                storageBoxType = "0";
+                storageBoxState = "0";
+                StorageBox storageBoxSmall = new StorageBox(strg,storageBoxName,storageBoxType,60000,storageBoxState);
+                storageBoxRepository.save(storageBoxSmall);
+
+                storageBoxName = "0";
+                storageBoxType = "0";
+                storageBoxState = "0";
+            }
+
             return new Result("ok");
         } else {
             return new Result("no");
@@ -48,59 +94,13 @@ public class StorageController {
 
     }
 
-    //    보관함 만들기
-    @PostMapping("/postBox")
-    public Result postBox(@RequestBody Box box){
-        Optional<Storage> findStorage = storageRepository.findByStorageName(box.getStorageName());
-        Storage strg = findStorage.get();
-
-        String storageBoxName;
-        String storageBoxType;
-        String storageBoxState;
-
-        for (int i = 0; i < box.getSmall(); i++) {
-            storageBoxName = "S"+(i+1);
-            storageBoxType = "0";
-            storageBoxState = "0";
-            StorageBox storageBoxSmall = new StorageBox(strg,storageBoxName,storageBoxType,storageBoxState);
-            storageBoxRepository.save(storageBoxSmall);
-
-            storageBoxName = "0";
-            storageBoxType = "0";
-            storageBoxState = "0";
-        }
-        for (int i = 0; i < box.getMedium(); i++) {
-            storageBoxName = "M"+(i+1);
-            storageBoxType = "0";
-            storageBoxState = "0";
-            StorageBox storageBoxSmall = new StorageBox(strg,storageBoxName,storageBoxType,storageBoxState);
-            storageBoxRepository.save(storageBoxSmall);
-
-            storageBoxName = "0";
-            storageBoxType = "0";
-            storageBoxState = "0";
-        }
-        for (int i = 0; i < box.getLarge(); i++) {
-            storageBoxName = "L"+(i+1);
-            storageBoxType = "0";
-            storageBoxState = "0";
-            StorageBox storageBoxSmall = new StorageBox(strg,storageBoxName,storageBoxType,storageBoxState);
-            storageBoxRepository.save(storageBoxSmall);
-
-            storageBoxName = "0";
-            storageBoxType = "0";
-            storageBoxState = "0";
-        }
-
-        return new Result("ok");
-    }
-
     //   보관소 매니저 생성
     @PostMapping("/postManager")
     public Result postManager(@RequestBody Manager manager) {
+        System.out.println(manager.getStorage());
         Optional<Storage> storage = storageRepository.findById(manager.getStorage());
-        List<Member> member = memberRepository.findByMID(manager.getMember());
-        StorageManager storageManager = new StorageManager(member.get(0),storage.get());
+        Optional<Member> member = memberRepository.findByMID(manager.getMember());
+        StorageManager storageManager = new StorageManager(member.get(),storage.get());
         storageManagerRepository.save(storageManager);
 
         return new Result("ok");
@@ -110,9 +110,10 @@ public class StorageController {
     @GetMapping("/checkManager/{memberId}")
     public Result checkManager(@PathVariable String memberId) throws NoSuchElementException {
         try {
-            List<Member> member = memberRepository.findByMID(memberId);
-            System.out.println(member.get(0).getMID());
-            Optional<StorageManager> storageManager = storageManagerRepository.findByMCode(member.get(0));
+
+            Optional<Member> member = memberRepository.findByMID(memberId);
+            System.out.println(member.get().getMID());
+            Optional<StorageManager> storageManager = storageManagerRepository.findByMCode(member.get());
 
             if (storageManager.isPresent()) {
                 // 중복
@@ -137,11 +138,26 @@ public class StorageController {
 
     //    보관소 상세보기
     @GetMapping("/storageView/{storageCode}")
-    public List<StorageBox> getStorageDetail(@PathVariable(value = "storageCode") Long storageCode){
-        Optional<Storage> storage = storageRepository.findById(storageCode);
-        List<StorageBox> boxList = storageBoxRepository.findByStorageCode(storage.get());
+    public Storage getStorageDetail(@PathVariable(value = "storageCode") Long storageCode){
 
-        return boxList;
+        List<StorageBox> boxList = storageBoxRepository.findByStorageCodeStorageCode(storageCode);
+
+        Optional<Storage> storage = storageRepository.findById(storageCode);
+
+        storage.get().setStorageBoxes(boxList);
+        return storage.get();
+    }
+
+    @GetMapping("/storageBoxGet/{boxCode}")
+    public String getBoxName(@PathVariable(value = "boxCode")long boxCode){
+        Optional<StorageBox> storageBox = storageBoxRepository.findById(boxCode);
+        return storageBox.get().getStorageBoxName();
+    }
+
+    @GetMapping("/boxPrice/{boxCode}")
+    public int getBoxPrice(@PathVariable(value = "boxCode")long boxCode){
+        Optional<StorageBox> storageBox = storageBoxRepository.findById(boxCode);
+        return storageBox.get().getStorageBoxPrice();
     }
 
 
@@ -173,14 +189,14 @@ public class StorageController {
         System.out.println(renewalBox.getBoxName());
         System.out.println(renewalBox.getStorageName());
 
-        List<Member> user = memberRepository.findByMID(renewalBox.getUserId());
+        Optional<Member> user = memberRepository.findByMID(renewalBox.getUserId());
         Optional<Storage> storage = storageRepository.findByStorageName(renewalBox.getStorageName());
         Optional<StorageBox> storageBox = storageBoxRepository.findByStorageCodeAndStorageBoxName(storage.get().getStorageCode(), renewalBox.getBoxName());
 
         LocalDateTime start = renewalBox.getStartTime();
         LocalDateTime end = renewalBox.getEndTime();
 
-        OrderList orderList = new OrderList(user.get(0));
+        OrderList orderList = new OrderList(user.get());
         orderListRepository.save(orderList);
 
         UseStorageBox useStorageBox = new UseStorageBox(start,end,storageBox.get(), orderList);
@@ -207,17 +223,16 @@ public class StorageController {
     }
 
     // 보관함 결제
-    @PostMapping("/payStorageBox")
+    @PostMapping("/payBox")
     public Result payStorageBox(@RequestBody payStorageBox payStorageBox){
-
-        List<Member> user = memberRepository.findByMID(payStorageBox.getUserId());
+        Optional<Member> user = memberRepository.findByMID(payStorageBox.getUserId());
         Optional<StorageBox> storageBox = storageBoxRepository.findById(payStorageBox.getStorageBoxCode());
 
         LocalDateTime start = payStorageBox.getUseStorageStartTime();
 
         LocalDateTime end = payStorageBox.getUseStorageEndTime();
 
-        OrderList orderList = new OrderList(user.get(0));
+        OrderList orderList = new OrderList(user.get(), payStorageBox.getPrice());
         orderListRepository.save(orderList);
 
 
@@ -231,6 +246,21 @@ public class StorageController {
 
         return new Result("ok");
 
+    }
+
+    //보관함 보관 확인
+    @PutMapping("/boxStateUpdate/{updateState}")
+    public Result updateBoxState(@PathVariable(value = "updateState")long code){
+        Optional<UseStorageBox> useStorageBox = useStorageBoxRepository.findById(code);
+        // 사용중인 보관함 상태코드 2(구독중) 변경
+        useStorageBox.get().setUseStorageState("2");
+
+        // 보관함 상태코드 2(보관중) 변경
+        useStorageBox.get().getStorageBoxCode().setStorageBoxState("2");
+
+        //update
+        useStorageBoxRepository.save(useStorageBox.get());
+        return new Result("ok");
     }
 
     //    로그인 없이 보관함 사용중인 사용자 조회
@@ -252,8 +282,8 @@ public class StorageController {
     //    로그인 없이 사용자 지정 할 때 사용
     @GetMapping("memberCheck/{memberId}")
     public Result getMemberId(@PathVariable(value = "memberId")String memberId) {
-        List<Member> member = memberRepository.findByMID(memberId);
-            return new Result("ok");
+        Optional<Member> member = memberRepository.findByMID(memberId);
+        return new Result("ok");
 //        if(member.){
 //            return new Result("ok");
 //        }else{
@@ -265,8 +295,8 @@ public class StorageController {
     @GetMapping("managerCheck/{managerId}")
     public Result getManagerCheck(@PathVariable(value = "managerId")String managerId) throws NoSuchElementException{
         try{
-            List<Member> member = memberRepository.findByMID(managerId);
-            Optional<StorageManager> storageManager = storageManagerRepository.findByMCode(member.get(0));
+            Optional<Member> member = memberRepository.findByMID(managerId);
+            Optional<StorageManager> storageManager = storageManagerRepository.findByMCode(member.get());
 
             if(storageManager.isPresent()){
                 return new Result("ok");
@@ -281,12 +311,12 @@ public class StorageController {
 
     //    매니저가 관리하고 있는 보관소 불러오기
     @GetMapping("getManagerStorage/{managerId}")
-    public List<StorageBox> getManagerStorage(@PathVariable(value = "managerId")String managerId) {
-        List<Member> member = memberRepository.findByMID(managerId);
-        Optional<StorageManager> storageManager = storageManagerRepository.findByMCode(member.get(0));
-        List<StorageBox> storageBoxList = storageBoxRepository.findByStorageCode(storageManager.get().getStorageCode());
+    public Storage getManagerStorage(@PathVariable(value = "managerId")String managerId) {
+        Optional<Member> member = memberRepository.findByMID(managerId);
+        Optional<StorageManager> storageManager = storageManagerRepository.findByMCode(member.get());
+        Optional<Storage> storageBoxList = storageRepository.findById(storageManager.get().getStorageCode().getStorageCode());
 
-        return storageBoxList;
+        return storageBoxList.get();
     }
 
     //    매니저가 관리하고 있는 보관소의 각 보관함 찾기

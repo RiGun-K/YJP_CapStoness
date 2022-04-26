@@ -33,6 +33,11 @@ public class OrderList {
         this.MCode = MCode;
     }
 
+    public OrderList(Member MCode, int orderPrice) {
+        this.MCode = MCode;
+        this.orderPrice = orderPrice;
+    }
+
     public OrderList(Member MCode, int orderPrice, String orderType) {
         this.MCode = MCode;
         this.orderPrice = orderPrice;

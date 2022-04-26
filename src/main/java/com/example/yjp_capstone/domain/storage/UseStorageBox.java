@@ -17,6 +17,9 @@ public class UseStorageBox {
     @Column
     private LocalDateTime useStorageEndTime;
 
+    @Column
+    private String useStorageState = "0";
+
     @ManyToOne
     @JoinColumn(name = "storageBoxCode")
     private StorageBox storageBoxCode;
@@ -46,8 +49,6 @@ public class UseStorageBox {
         this.orderCode = orderCode;
     }
 
-
-
     public long getUseStorageBoxCode() {
         return useStorageBoxCode;
     }
@@ -70,6 +71,14 @@ public class UseStorageBox {
 
     public void setUseStorageEndTime(LocalDateTime useStorageEndTime) {
         this.useStorageEndTime = useStorageEndTime;
+    }
+
+    public String getUseStorageState() {
+        return useStorageState;
+    }
+
+    public void setUseStorageState(String useStorageState) {
+        this.useStorageState = useStorageState;
     }
 
     public StorageBox getStorageBoxCode() {

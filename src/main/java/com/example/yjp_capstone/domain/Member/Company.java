@@ -1,5 +1,6 @@
 package com.example.yjp_capstone.domain.Member;
 
+
 import javax.persistence.*;
 
 @Entity
@@ -26,8 +27,9 @@ public class Company {
     private String Chp;
 
     @Column
-    private String CZC;
-
+    private String CZadd;
+    @Column
+    private String CRadd;
     @Column
     private String CAdd;
 
@@ -39,23 +41,27 @@ public class Company {
 
     @Column
     private String Cst;
+    @Column
+    private String Csc;
 
     public Company(){
 
     }
 
-    public Company(long CC, Member member, String CCode, String CName, String CEO, String chp, String CZC, String CAdd, String cph, String CEmail, String cst) {
+    public Company(long CC, Member member, String CCode, String CName, String CEO, String chp, String CZadd, String CRadd, String CAdd, String cph, String CEmail, String cst, String csc) {
         this.CC = CC;
         this.member = member;
         this.CCode = CCode;
         this.CName = CName;
         this.CEO = CEO;
         Chp = chp;
-        this.CZC = CZC;
+        this.CZadd = CZadd;
+        this.CRadd = CRadd;
         this.CAdd = CAdd;
         Cph = cph;
         this.CEmail = CEmail;
         Cst = cst;
+        Csc = csc;
     }
 
     public long getCC() {
@@ -106,12 +112,20 @@ public class Company {
         Chp = chp;
     }
 
-    public String getCZC() {
-        return CZC;
+    public String getCZadd() {
+        return CZadd;
     }
 
-    public void setCZC(String CZC) {
-        this.CZC = CZC;
+    public void setCZadd(String CZadd) {
+        this.CZadd = CZadd;
+    }
+
+    public String getCRadd() {
+        return CRadd;
+    }
+
+    public void setCRadd(String CRadd) {
+        this.CRadd = CRadd;
     }
 
     public String getCAdd() {
@@ -144,6 +158,14 @@ public class Company {
 
     public void setCst(String cst) {
         Cst = cst;
+    }
+
+    public String getCsc() {
+        return Csc;
+    }
+
+    public void setCsc(String csc) {
+        Csc = csc;
     }
 }
 

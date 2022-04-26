@@ -37,6 +37,32 @@ const routes = [
     name: 'Horby',
     component: () => import('@/components/user/Horby.vue')
   },
+  {
+    path:'/agreement',
+    name:'Agreement',
+    component: () => import('@/components/user/Agreement.vue')
+  },
+  {
+    path:'/sellerAccept',
+    name:'SellerAccept',
+    component: () => import('@/components/user/SellerAccept.vue')
+  },
+  {
+    path:'/searchSelect',
+    name:'SearchSelect',
+    component: () => import('@/components/user/SearchSelect.vue')
+  },
+  {
+    path:'/searchId',
+    name:'SearchId',
+    component: () => import('@/components/user/IdSearch.vue')
+  },
+  {
+    path:'/searchPass',
+    name:'SearchPass',
+    component: () => import('@/components/user/PassSearch.vue')
+  },
+
 
     //////////////////////////////////////////////////////////////////
 
@@ -231,6 +257,16 @@ const routes = [
     path: "/myBox/renewalBox",
     name: "renewalBox",
     component:()=>import('@/components/storageService/user/RenewalBox.vue')
+  },
+  {
+    path: "/myBox/moveBox",
+    name: "moveBox",
+    component:()=>import('@/components/storageService/user/MoveBox.vue')
+  },
+  {
+    path: "/myBox/repairBox",
+    name: "repairBox",
+    component:()=>import('@/components/storageService/user/RepairBox.vue')
   },
   {
     path:'/storageManager',
