@@ -161,9 +161,10 @@ const routes = [
     props: true
   },
   {
-    path: '/itemBuy/buyNow',
+    path: '/itemBuy/buyNow/:menuid',
     name: 'BuyNow',
-    component: () => import('@/components/cart/ItemBuy/BuyNow.vue')
+    component: () => import('@/components/cart/ItemBuy/BuyNow.vue'),
+    props: true
   },
   {
     path: '/itemBuy/buyComplete',

@@ -1,13 +1,15 @@
 <template>
   <div class="buyNow">
     <h2>주문/결제</h2>
-
+    {{ this.content.menuname }}
     <h3>구매자 정보</h3>
     <table>
       <tr>
         <td class="buy-now-td">이름</td>
-        <td>땡땡땡</td>
+        <td>{{ content.menuname }}</td>
+        {{ content.menuname }}
       </tr>
+      {{ this.content.menuname }}
       <tr>
         <td class="buy-now-td">이메일</td>
         <td>Tang@naver.com</td>
@@ -102,22 +104,45 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'BuyNow',
+  created() {
+    this.DataList();
+  },
   data () {
     return {
       zip: '',
       addr1: '',
       addr2: '',
       price: 1000,
-      buyCheck: false
+      buyCheck: false,
+
+      content: [],
     }
   },
+
   mounted () {
     const IMP = window.IMP
     IMP.init('imp35975601')
   },
+
   methods: {
+    DataList() {
+      this.id = this.$route.params.menuid;
+      console.log(this.id);
+      axios.get('http://localhost:9002/api/product_detail/' + this.id)
+          .then(res => {
+            console.log(res.data);
+            this.content = res.data;
+            console.log(this.content.menuname);
+          })
+          .catch(e => {
+            console.log(e);
+          })
+    },
+
     showApi () {
       new window.daum.Postcode({
         oncomplete: (data) => {

@@ -141,7 +141,6 @@ public class ProductController {
 //    }
 
     @PutMapping("/myProduct_Update")
-    @JsonProperty
     public Menu UpdateMyProduct_Detail(@RequestParam(value = "file", required = false) MultipartFile uploadFile, Menu menu) throws IllegalStateException, IOException {
         System.out.println("파일 이름" + uploadFile.getOriginalFilename());
         System.out.println("파일 크기" + uploadFile.getSize());

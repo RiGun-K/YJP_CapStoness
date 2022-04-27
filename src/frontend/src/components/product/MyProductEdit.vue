@@ -110,7 +110,7 @@ export default {
     console.log(this.$route.params.ex)
     console.log(this.$route.params.mid)
 
-    this.mid = this.$route.params.mid;
+    this.mid = store.getters.getLoginState.loginState;
 
     if(this.editMode) {
       this.menuid = this.$route.params.menuid

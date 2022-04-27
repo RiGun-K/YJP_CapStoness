@@ -127,7 +127,7 @@ export default {
         name: "MyProductEdit",
         params: {
                   menuid: this.id,
-                  mid: this.myContent.mid.mcode,
+                  mid: this.myContent.mid.mid,
                   menuname: this.myContent.menuname,
                   stock: this.myContent.stock,
                   price: this.myContent.price,

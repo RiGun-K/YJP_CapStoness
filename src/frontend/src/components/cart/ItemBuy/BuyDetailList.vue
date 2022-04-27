@@ -53,7 +53,7 @@ export default {
 
     buyData() {
       this.$router.push({
-        path: "/itemBuy/buyNow"
+        path: `/itemBuy/buyNow/${this.content.menuid}`
       })
     },
     putData() {
