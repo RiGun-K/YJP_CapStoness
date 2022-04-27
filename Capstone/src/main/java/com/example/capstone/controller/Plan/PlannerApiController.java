@@ -31,7 +31,7 @@ public class PlannerApiController {
         String result = planService.checkPlanName(plan);
         return result;
     }
-
+    // asd
     @PutMapping("/api/insertDetailPlan")
     public void insertDetailPlan(@RequestBody Plan_detail plan_detail) {
         planService.insertDetailPlan(plan_detail);
