@@ -137,19 +137,34 @@ export default {
 		},
 		deleteTeam: function () {
 			const url = 'api/deleteTeam';
-
+			//	const team = url; // this.$store.state.teamCode.team;
+			// console.log(team);
+			// console.log(team);
 			axios
 				.post(url, this.$store.state.teamCode.teamCode)
 				.then((response) => {
 					console.log(this.$store.state.teamCode.teamCode);
 					console.log('삭제완료!');
+					// this.$router.push('/TeamManagementPage')
 				})
 				.catch((error) => {
 					alert('삭제에러');
 					console.log(error);
 				});
 		},
+		// creatingPlanButton: function () {
+		// 	const url = 'api/creatingPlan';
 
+		// 	axios
+		// 		.post(url)
+		// 		.then((response) => {
+		// 			console.log('생성완료');
+		// 		})
+		// 		.catch((error) => {
+		// 			alert('생성에러');
+		// 			console.log(error);
+		// 		});
+		// },
 		openWindow: function (url) {
 			window.open(url);
 		},

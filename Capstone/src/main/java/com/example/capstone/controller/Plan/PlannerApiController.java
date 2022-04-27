@@ -20,7 +20,6 @@ public class PlannerApiController {
 
     @PostMapping("/api/createPlan")
     public Optional<Plan> createPlan(@RequestBody Plan plan) {
-        System.out.println(plan);
         planService.createPlan(plan);
         Optional<Plan> selectedPlan = planService.selectPlan(plan.getPlanName());
         return selectedPlan;
@@ -31,7 +30,7 @@ public class PlannerApiController {
         String result = planService.checkPlanName(plan);
         return result;
     }
-    // asd
+
     @PutMapping("/api/insertDetailPlan")
     public void insertDetailPlan(@RequestBody Plan_detail plan_detail) {
         planService.insertDetailPlan(plan_detail);
