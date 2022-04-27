@@ -1,10 +1,16 @@
 package com.example.capstone.domain.Plan;
 
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Team {
     @Id
@@ -21,6 +27,12 @@ public class Team {
 
     @Column
     private String teamMaster;
+
+
+//    @OneToMany(cascade = CascadeType.ALL)
+//    @JoinColumn(name="TEAMCODE")
+//    private List<Team_Member> team_members;
+
 
     public String getTeamMaster() {
         return teamMaster;

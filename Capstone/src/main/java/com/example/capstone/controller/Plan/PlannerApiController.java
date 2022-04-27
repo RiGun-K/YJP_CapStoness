@@ -5,6 +5,7 @@ import com.example.capstone.domain.Plan.Plan_detail;
 import com.example.capstone.service.PlanService;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,8 @@ public class PlannerApiController {
 
     @PostMapping("/api/loadDetailPlanOfDay")
     public List<Plan_detail> loadDetailPlanOfDay(@RequestBody Plan_detail plan_detail) {
+        System.out.println("plan_detail");
+        System.out.println(plan_detail);
         return planService.loadDetailPlan(plan_detail);
     }
 }

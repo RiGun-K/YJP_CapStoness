@@ -12,6 +12,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+
 @Entity
 public class Checklist implements Serializable{
 

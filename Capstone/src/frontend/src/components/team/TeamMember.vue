@@ -31,7 +31,9 @@
 		<div>
 			<h2>플랜목록</h2>
 			<div v-for="(value, index) in planList" :key="index">
-				<button>{{ value.planName }}</button>
+				<button @Click="updatePlanCode(value)">
+					{{ value.planName }}
+				</button>
 			</div>
 			<div v-if="showingDeleteTeamButton">
 				<button @click="openWindow('/basicPlan')">
@@ -137,9 +139,6 @@ export default {
 		},
 		deleteTeam: function () {
 			const url = 'api/deleteTeam';
-			//	const team = url; // this.$store.state.teamCode.team;
-			// console.log(team);
-			// console.log(team);
 			axios
 				.post(url, this.$store.state.teamCode.teamCode)
 				.then((response) => {
@@ -152,19 +151,13 @@ export default {
 					console.log(error);
 				});
 		},
-		// creatingPlanButton: function () {
-		// 	const url = 'api/creatingPlan';
+		updatePlanCode: function (planCode) {
+			this.$store.commit('updatePlanCode', planCode);
+			this.$router.push({
+				name: 'detailPlan',
+			});
+		},
 
-		// 	axios
-		// 		.post(url)
-		// 		.then((response) => {
-		// 			console.log('생성완료');
-		// 		})
-		// 		.catch((error) => {
-		// 			alert('생성에러');
-		// 			console.log(error);
-		// 		});
-		// },
 		openWindow: function (url) {
 			window.open(url);
 		},

@@ -99,10 +99,10 @@ public class teamManagementApiController {
 
     @GetMapping("/api/loadTeamPlans/{teamCode}")
     public List<Plan> loadTeamPlans(@PathVariable("teamCode") Long team) {
-        //== test ==//
-        TeamDto teamDto = TeamDto.builder()
-                .teamCode(1L)
-                .build();
+//        //== test ==//
+//        TeamDto teamDto = TeamDto.builder()
+//                .teamCode(1L)
+//                .build();
 
         return team_memberService.loadTeamPlans(team);
 

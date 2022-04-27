@@ -1,8 +1,12 @@
 <template>
 	<h2>일정작성</h2>
-	<h2>{{ this.$store.state.diff - 1 }}박{{ this.$store.state.diff }}일</h2>
+	<h2>
+		{{ this.$store.state.planCode.planTotalDate - 1 }}박{{
+			this.$store.state.planCode.planTotalDate
+		}}일
+	</h2>
 
-	<div v-for="index in this.$store.state.diff" :key="index">
+	<div v-for="index in this.$store.state.planCode.planTotalDate" :key="index">
 		<button @click="datesButton(index)">{{ index }}</button>일차
 		<br />
 	</div>
@@ -102,6 +106,7 @@ export default {
 			detailPlanOfDayList: [],
 			isUnclicked: true,
 			isClicked: false,
+			planCode: '',
 		};
 	},
 	mounted() {},

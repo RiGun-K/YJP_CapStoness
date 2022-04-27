@@ -79,6 +79,8 @@ export default {
 			planBudget: '0',
 			planName: '',
 			checkResult: '',
+			planCode: '',
+			diff: '',
 		};
 	},
 	methods: {
@@ -108,9 +110,9 @@ export default {
 			this.planStart = firstValue.format('YYYYMMDD');
 			const secondValue = dayjs(this.shareDate[1]);
 			this.planEnd = secondValue.format('YYYYMMDD');
-			const diff = secondValue.diff(firstValue, 'd') + 1;
-			this.$store.commit('updateDiff', diff);
-			console.log(this.$store.state.diff);
+			this.diff = secondValue.diff(firstValue, 'd') + 1;
+			// this.$store.commit('updateDiff', diff);
+			// console.log(this.$store.state.diff);
 		},
 		createPlan: function () {
 			if (
@@ -141,10 +143,14 @@ export default {
 						},
 					)
 					.then((response) => {
+						this.planCode = response.data;
+
 						this.$store.commit('updatePlanCode', response.data);
 						// response.date는  {planCode: 251, teamCode: {…}, planDestination: '대구', planName: '123', planBudget: 0,
-						console.log(this.$store.state.planCode);
-						this.$router.push({ name: 'selectCampingPlace' });
+
+						this.$router.push({
+							name: 'detailPlan',
+						});
 					})
 					.catch((error) => {
 						alert('에러');
