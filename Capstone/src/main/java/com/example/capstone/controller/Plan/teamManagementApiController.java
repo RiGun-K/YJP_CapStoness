@@ -4,15 +4,13 @@ package com.example.capstone.controller.Plan;
 import com.example.capstone.domain.Member.Member;
 import com.example.capstone.domain.Plan.Plan;
 import com.example.capstone.domain.Plan.Team;
-import com.example.capstone.domain.Plan.Team_Member;
-import com.example.capstone.dto.plan.TeamDto;
+import com.example.capstone.domain.Plan.TeamMember;
 import com.example.capstone.repository.Member.MemberRepository;
 import com.example.capstone.repository.Plan.TeamRepository;
 import com.example.capstone.repository.Plan.Team_MemberRepository;
 import com.example.capstone.service.PlanService;
 import com.example.capstone.service.TeamService;
 import com.example.capstone.service.Team_MemberService;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,18 +38,18 @@ public class teamManagementApiController {
     }
 
     @PostMapping("/api/TeamManagementPage/{mcode}")
-    public List<Team_Member> teamManagementPage(@PathVariable("mcode") Member mcode) {
-        List<Team_Member> tm = team_memberRepository.findBymcode(mcode);
+    public List<TeamMember> teamManagementPage(@PathVariable("mcode") Member mcode) {
+        List<TeamMember> tm = team_memberRepository.findBymcode(mcode);
         if (tm.isEmpty()) {
             return null;
         } else return tm;
     }
 
     @GetMapping("/api/loadTeamMemberList/{teamName}")
-    public List<Team_Member> loadTeamMemberList(@PathVariable("teamName") String teamName) {
+    public List<TeamMember> loadTeamMemberList(@PathVariable("teamName") String teamName) {
         Optional<Team> teamCode = teamRepository.findByTeamName(teamName);
         System.out.println(teamCode.get());
-        List<Team_Member> teamMcode = team_memberRepository.findByteamCode(teamCode.get());
+        List<TeamMember> teamMcode = team_memberRepository.findByteamCode(teamCode.get());
         System.out.println(teamMcode.get(0));
         if (teamMcode.isEmpty()) {
             return null;
@@ -70,18 +68,18 @@ public class teamManagementApiController {
     }
 
     @PostMapping("api/addTeamMember")
-    public String addTeamMember(@RequestBody Team_Member teamMember) {
+    public String addTeamMember(@RequestBody TeamMember teamMember) {
         return team_memberService.addTeamMember(teamMember);
     }
 
     @PostMapping("/api/acceptTeam")
-    public String acceptTeam(@RequestBody Team_Member teamMember) {
+    public String acceptTeam(@RequestBody TeamMember teamMember) {
         team_memberService.acceptTeam(teamMember);
         return "y";
     }
 
     @PostMapping("/api/refuseTeam")
-    public String refuseTeam(@RequestBody Team_Member teamMember) {
+    public String refuseTeam(@RequestBody TeamMember teamMember) {
         team_memberService.refuseTeam(teamMember);
         return "y";
     }
@@ -93,7 +91,7 @@ public class teamManagementApiController {
     }
 
     @PostMapping("/api/loginedTeamCode")
-    public Team_Member loginedTeamCode(@RequestBody Team_Member teamMember) {
+    public TeamMember loginedTeamCode(@RequestBody TeamMember teamMember) {
         return team_memberService.loginedTeamCode(teamMember);
     }
 

@@ -17,6 +17,7 @@ import java.util.List;
 public class Plan {
 
     @Id
+    @Column
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long planCode;
 
@@ -24,17 +25,10 @@ public class Plan {
     @JoinColumn(name= "TEAMCODE")
     private Team teamCode;
 
-    @OneToMany
-    @JoinColumn(name="planCode")
-    private List<Plan_detail> planDetails;
-
-
     @Column
     private String planDestination;
-
     @Column
     private String planName;
-
     @Column
     private int planBudget;
     @Column
@@ -49,6 +43,4 @@ public class Plan {
     private int planNumber;
     @Column
     private int planTotalDate;
-
-
 }

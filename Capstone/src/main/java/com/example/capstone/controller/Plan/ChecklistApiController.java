@@ -20,28 +20,23 @@ public class ChecklistApiController {
 
 
     @PutMapping("/api/insertChecklist")
-    public void insertChecklist(@RequestBody Checklist checklist){
-        System.out.println(checklist.getDetailCode().getDetailCode());
-        System.out.println(checklist.getCheckContent());
+    public void insertChecklist(@RequestBody Checklist checklist) {
         checklistService.insertChecklist(checklist);
     }
 
-@PostMapping("/api/loadChecklist")
-    public List<Checklist> loadChecklist (@RequestBody  Checklist checklist){
-    System.out.println("hihhhhhhhhhhhhhhh");
+    @PostMapping("/api/loadChecklist")
+    public List<Checklist> loadChecklist(@RequestBody Checklist checklist) {
         return checklistService.loadChecklist(checklist);
-}
+    }
 
-@PutMapping("/api/updateState")
-    public Optional<Checklist> updateState(@RequestBody Checklist checklistCode){
+    @PutMapping("/api/updateState")
+    public Optional<Checklist> updateState(@RequestBody Checklist checklistCode) {
         return checklistService.updateState(checklistCode);
-}
-@DeleteMapping("/api/deleteChecklist")
-    public void deleteChecklist (@RequestBody Checklist checklist){
-    System.out.println("컨트롤러!");
-    System.out.println(checklist);
-         checklistService.deleteChecklist(checklist);
+    }
 
+    @DeleteMapping("/api/deleteChecklist")
+    public void deleteChecklist(@RequestBody Checklist checklist) {
+        checklistService.deleteChecklist(checklist);
 
-}
+    }
 }

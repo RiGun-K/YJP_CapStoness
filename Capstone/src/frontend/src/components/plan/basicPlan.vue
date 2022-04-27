@@ -111,7 +111,7 @@ export default {
 			const secondValue = dayjs(this.shareDate[1]);
 			this.planEnd = secondValue.format('YYYYMMDD');
 			this.diff = secondValue.diff(firstValue, 'd') + 1;
-			// this.$store.commit('updateDiff', diff);
+			this.$store.commit('updateDiff', this.diff);
 			// console.log(this.$store.state.diff);
 		},
 		createPlan: function () {
@@ -140,6 +140,7 @@ export default {
 							planType: this.planType,
 							planNumber: this.planNumber,
 							planBudget: this.planBudget,
+							planTotalDate: this.diff,
 						},
 					)
 					.then((response) => {

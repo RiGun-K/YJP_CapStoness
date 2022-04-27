@@ -89,7 +89,6 @@
 import axios from 'axios';
 export default {
 	created() {
-		//this.loadPlanCode();
 		this.loadDetailPlanOfDay(1);
 	},
 	data() {
@@ -161,6 +160,7 @@ export default {
 			this.loadDetailPlanOfDay(index);
 		},
 		loadDetailPlanOfDay: function (index) {
+			this.dateIndex = index;
 			const url = '/api/loadDetailPlanOfDay';
 			this.detailPlanOfDayList.length = 0;
 			axios

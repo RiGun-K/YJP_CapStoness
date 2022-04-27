@@ -1,78 +1,39 @@
 package com.example.capstone.domain.Plan;
 
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 
+@Getter
+@Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 public class Team {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="TEAMCODE")
     private Long teamCode;
 
-    @Column(name="TEAMNAME")
-    private String teamName;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+    @OneToMany(mappedBy = "teamMemberCode",cascade = {CascadeType.ALL},orphanRemoval = true)
+    private List<TeamMember> teamMembers;
 
     @Column
+    private String teamName;
+    @Column
     private char teamState;
-
-
     @Column
     private String teamMaster;
 
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name="TEAMCODE")
-//    private List<Team_Member> team_members;
 
 
-    public String getTeamMaster() {
-        return teamMaster;
-    }
-
-    public void setTeamMaster(String teamMaster) {
-        this.teamMaster = teamMaster;
-    }
-    public Long getTeamCode() {
-        return teamCode;
-    }
-
-    public void setTeamCode(Long teamCode) {
-        this.teamCode = teamCode;
-    }
-
-    public String getTeamName() {
-        return teamName;
-    }
-
-    public void setTeamName(String teamName) {
-        this.teamName = teamName;
-    }
-
-    public char getTeamState() {
-        return teamState;
-    }
-
-    public void setTeamState(char teamState) {
-        this.teamState = teamState;
-    }
-
-
-
-    @Override
-    public String toString() {
-        return "Team{" +
-                "teamCode='" + teamCode + '\'' +
-                ", teamName='" + teamName + '\'' +
-                ", teamState=" + teamState +
-                '}';
-    }
 }

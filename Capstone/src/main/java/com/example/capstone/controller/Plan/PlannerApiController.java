@@ -12,9 +12,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping
 public class PlannerApiController {
-    //
-    private final PlanService planService;
 
+    private final PlanService planService;
     public PlannerApiController(PlanService planService) {
         this.planService = planService;
     }
@@ -39,8 +38,6 @@ public class PlannerApiController {
 
     @PostMapping("/api/loadDetailPlanOfDay")
     public List<Plan_detail> loadDetailPlanOfDay(@RequestBody Plan_detail plan_detail) {
-        System.out.println("plan_detail");
-        System.out.println(plan_detail);
         return planService.loadDetailPlan(plan_detail);
     }
 }

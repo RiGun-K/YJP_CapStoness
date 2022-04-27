@@ -1,13 +1,11 @@
 package com.example.capstone.service;
 
 
-import com.example.capstone.domain.Plan.Team_Member;
+import com.example.capstone.domain.Plan.TeamMember;
 import com.example.capstone.repository.Plan.Team_MemberRepository;
 import org.springframework.stereotype.Service;
 import com.example.capstone.domain.Plan.Plan;
-import com.example.capstone.domain.Plan.Plan_detail;
 import com.example.capstone.repository.Plan.PlanRepository;
-import com.example.capstone.repository.Plan.Plan_detailRepository;
 import com.example.capstone.repository.Plan.TeamRepository;
 
 import javax.transaction.Transactional;
@@ -26,24 +24,24 @@ public class Team_MemberService {
         this.planRepository = planRepository;
     }
 
-    public void acceptTeam(Team_Member teamMember) {
+    public void acceptTeam(TeamMember teamMember) {
 
-        List<Team_Member> acceptionCheck = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeam(), teamMember.getMember());
+        List<TeamMember> acceptionCheck = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeamCode(), teamMember.getMcode());
         acceptionCheck.get(0).setAcception("y");
-        team_memberRepository.findById(acceptionCheck.get(0).getMember().getMCode());
+        team_memberRepository.findById(acceptionCheck.get(0).getMcode().getMCode());
         team_memberRepository.save(acceptionCheck.get(0));
     }
 
-    public void refuseTeam(Team_Member teamMember) {
+    public void refuseTeam(TeamMember teamMember) {
         System.out.println("받아짐");
-        List<Team_Member> acceptionCheck = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeam(), teamMember.getMember());
+        List<TeamMember> acceptionCheck = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeamCode(), teamMember.getMcode());
         team_memberRepository.delete(acceptionCheck.get(0));
         System.out.println("거절성공");
     }
 
-    public String addTeamMember(Team_Member teamMember) {
+    public String addTeamMember(TeamMember teamMember) {
 
-        List<Team_Member> checkMember = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeam(), teamMember.getMember());
+        List<TeamMember> checkMember = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeamCode(), teamMember.getMcode());
         if (checkMember.isEmpty()) {
             System.out.println("있는지 없는지 확인");
             System.out.println(teamMember.getTeamMemberCode());
@@ -59,8 +57,8 @@ public class Team_MemberService {
 
     }
 
-    public Team_Member loginedTeamCode(Team_Member teamMember) {
-        List<Team_Member> tm = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeamCode(), teamMember.getMcode());
+    public TeamMember loginedTeamCode(TeamMember teamMember) {
+        List<TeamMember> tm = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeamCode(), teamMember.getMcode());
         return tm.get(0);
     }
 
