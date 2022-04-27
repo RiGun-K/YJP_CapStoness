@@ -1,7 +1,6 @@
 package com.example.yjp_capstone.domain.Product;
 
 import com.example.yjp_capstone.domain.Member.Member;
-import lombok.Builder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -56,9 +55,7 @@ public class Menu {
         this.MID = MID;
     }
 
-    public Menu() {
-
-    }
+    public Menu() { }
 
 
     public int getMenuid() {

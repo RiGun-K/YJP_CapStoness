@@ -141,7 +141,7 @@ public class ProductController {
 //    }
 
     @PutMapping("/myProduct_Update")
-    public Menu UpdateMyProduct_Detail(@RequestParam(value = "file", required = false) MultipartFile uploadFile, Menu menu) throws IllegalStateException, IOException {
+    public Menu UpdateMyProduct_Detail(@RequestParam(value = "file", required = false) MultipartFile uploadFile, Menu menu, MenuDTO menuDTO) throws IllegalStateException, IOException {
         System.out.println("파일 이름" + uploadFile.getOriginalFilename());
         System.out.println("파일 크기" + uploadFile.getSize());
 
@@ -183,7 +183,11 @@ public class ProductController {
         }
         System.out.println(menu.getKindid());
         System.out.println(menu.getMenuid());
-        System.out.println(menu.getMID());
+
+        /* menu.getMID() 하면 반환값이 String인데 타입은 Menu라서 Null로 뜸
+           따라서 menuDTO.getMid() <- String 타입으로 넘겨서 member 테이블에서 'rigun'을 찾아줌
+         */
+        System.out.println(menuDTO.getMid());
 
 
 //        List<Member> member = memberRepository.findByMID(menuDTO.getMid());
@@ -192,15 +196,18 @@ public class ProductController {
 //
 
 
+
             menu.setSavedTime(LocalDateTime.now());
+
+        Optional<Member> member = memberRepository.findByMID(menuDTO.getMid());
+
+        System.out.println(member.get());
+            menu.setMID(member.get());
+        //            menu.setMID(memberRepository.findByMID("rigun").get());
+
+        System.out.println(menu);
 //
 
-
-            menu.setMID(memberRepository.findByMID("rigun").get());
-//
-//        Menu menu = new Menu(menuDTO.getMenuname(), menuDTO.getPrice(), menuDTO.getEx(), menuDTO.getSavedTime(), menuDTO.getStock(), menuDTO.getOrigFilename(), menuDTO.getFilename(), menuDTO.getFilePath(), kind.get(), member.get(0));
-//        System.out.println(menu);
-//
         menuRepository.save(menu);
 
         return menu;

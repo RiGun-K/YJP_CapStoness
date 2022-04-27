@@ -148,7 +148,7 @@ export default {
 
       axios.post(`${baseURI}/api/product_signup`, formData, { headers: { 'Content-Type': 'multipart/form-data'}} )
         .then(res => {
-          console.log("성공" + formData);
+          console.log("성공" + res);
           alert("상품이 등록되었습니다.");
           this.$router.push({
             name: "MyProductList"

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class MenuDTO {
 
+    private int menuid;
     private String menuname;
     private int price;
     private String ex;
