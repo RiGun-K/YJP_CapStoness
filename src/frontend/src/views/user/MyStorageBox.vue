@@ -18,7 +18,8 @@
               <td>{{ useBox.startTime }}</td>
               <td>{{ useBox.endTime }}</td>
               <td v-if="useBox.none">
-                <button class="mystoragebox-re" @click="renewalPay(useBox)">연장 / 해지</button>
+                <button @click="moveBox(useBox)">장비 이동</button><button @click="repairBox(useBox)">장비 수리</button>
+                <button class="mystoragebox-re" @click="renewalPay(useBox)">보관함 연장 / 해지</button>
               </td>
             </tr>
             </tbody>
@@ -60,6 +61,7 @@ export default {
                 boxName: '',
                 boxState: '',
                 storageName: '',
+                useBoxCode:'',
                 start: '',
                 end: '',
                 none: true
@@ -71,6 +73,7 @@ export default {
               box.boxName = boxes[i][2]
               box.boxState = boxes[i][3]
               box.storageName = boxes[i][4]
+              box.useBoxCode = boxes[i][5]
               box.start = start
               box.end = end
               // box.boxState 가 1 이면 연장 버튼 on 0이면 연장 버튼 off
@@ -124,6 +127,27 @@ export default {
         })
   },
   methods: {
+    moveBox(useBox){
+      this.$router.push({
+        name: 'moveBox',
+        params: {
+          userId: this.memberId,  // 사용자 아이디
+          storageName: useBox.storageName,    // 보관소 이름
+          boxName: useBox.boxName,       // 보관함 이름
+          useBoxCode : useBox.useBoxCode // 사용 보관함 코드
+        }
+      })
+    },
+    repairBox(useBox){
+      this.$router.push({
+        name: 'repairBox',
+        params: {
+          userId: this.memberId,  // 사용자 아이디
+          storageName: useBox.storageName,    // 보관소 이름
+          boxName: useBox.boxName,       // 보관함 이름
+        }
+      })
+    },
     renewalPay(useBox) {
       this.$router.push({
         name: 'renewalBox',

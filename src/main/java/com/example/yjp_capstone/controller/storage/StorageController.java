@@ -1,5 +1,6 @@
 package com.example.yjp_capstone.controller.storage;
 
+
 import com.example.yjp_capstone.domain.Member.Member;
 import com.example.yjp_capstone.domain.storage.*;
 import com.example.yjp_capstone.dto.storage.*;
@@ -37,10 +38,10 @@ public class StorageController {
 
     @PostMapping("/postStorage")
     public Result postStorage(@RequestBody StorageData storageData) {
-        Storage storage = storageData.getStorage();
-        Box box = storageData.getBox();
+          Storage storage = storageData.getStorage();
+          Box box = storageData.getBox();
 
-        Optional<Storage> storageChk = storageRepository.findByStorageName(storage.getStorageName());
+          Optional<Storage> storageChk = storageRepository.findByStorageName(storage.getStorageName());
         if (!storageChk.isPresent()) {
             // 보관소 추가
             storageRepository.save(storage);
@@ -251,13 +252,15 @@ public class StorageController {
     //보관함 보관 확인
     @PutMapping("/boxStateUpdate/{updateState}")
     public Result updateBoxState(@PathVariable(value = "updateState")long code){
+        System.out.println("code");
+        System.out.println(code);
         Optional<UseStorageBox> useStorageBox = useStorageBoxRepository.findById(code);
         // 사용중인 보관함 상태코드 2(구독중) 변경
         useStorageBox.get().setUseStorageState("2");
-
+        System.out.println(useStorageBox.get().getUseStorageState());
         // 보관함 상태코드 2(보관중) 변경
         useStorageBox.get().getStorageBoxCode().setStorageBoxState("2");
-
+        System.out.println(useStorageBox.get().getStorageBoxCode().getStorageBoxState());
         //update
         useStorageBoxRepository.save(useStorageBox.get());
         return new Result("ok");
@@ -283,7 +286,7 @@ public class StorageController {
     @GetMapping("memberCheck/{memberId}")
     public Result getMemberId(@PathVariable(value = "memberId")String memberId) {
         Optional<Member> member = memberRepository.findByMID(memberId);
-        return new Result("ok");
+            return new Result("ok");
 //        if(member.){
 //            return new Result("ok");
 //        }else{
@@ -333,5 +336,28 @@ public class StorageController {
 
         return object;
     }
+
+    // 보관함 장소 이동
+    @PostMapping("roundMoveBox")
+    private Result roundmovePay(@RequestBody RoundMove roundMove){
+
+        Optional<UseStorageBox> useStorageBox = useStorageBoxRepository.findById(roundMove.getUseBoxCode());
+        if(useStorageBox.get().getUseStorageState() == "2"){
+            useStorageBox.get().setUseStorageState("4");
+            useStorageBoxRepository.save(useStorageBox.get());
+
+            Optional<Member> member = memberRepository.findByMID(roundMove.getUserId());
+
+            OrderList orderList = new OrderList(member.get());
+            orderListRepository.save(orderList);
+
+            return new Result("ok");
+        }else{
+            return new Result("no");
+        }
+
+    }
+
+    // 보관함 보관소 이동
 
 }

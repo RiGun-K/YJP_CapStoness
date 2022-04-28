@@ -250,6 +250,11 @@ const routes = [
     component: ()=> import('@/components/storageService/user/UserStorageDetail.vue')
   },
   {
+    path:"/storageView/:storageCode/paypage",
+    name:"storagePay",
+    component:()=> import('@/views/user/StoragePayPage.vue')
+  },
+  {
     path: "/myBox",
     name: "myBox",
     component:()=>import('@/views/user/MyStorageBox.vue')
@@ -263,6 +268,12 @@ const routes = [
     path: "/myBox/moveBox",
     name: "moveBox",
     component:()=>import('@/components/storageService/user/MoveBox.vue')
+  },
+  {
+    path: "/myBox/moveBox/pay",
+    name: "BoxMovePay",
+    component:()=>import('@/views/user/BoxMovePay.vue'),
+    props: true
   },
   {
     path: "/myBox/repairBox",

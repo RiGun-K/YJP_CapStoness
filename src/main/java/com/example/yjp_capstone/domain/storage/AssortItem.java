@@ -13,6 +13,8 @@ public class AssortItem {
     @Column
     private String assortItemName;
 
+
+
     public AssortItem() {
     }
 
