@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h2>게시판 리스트</h2>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <br>
+    <h2 style="font-weight: bold">게시판 리스트</h2>
+    <br>
 
         <div class="listWrap">
           <table class="tbList">
@@ -18,11 +22,13 @@
       <router-link to="{name: 'View', params: { writer_code:item.writer_code }}"></router-link>
           </table>
 
+          <br>
       <tr>
           <div id="btnWrap">
     <button @click="write" class="btn" style="float: right" >글쓰기</button>
           </div>
       </tr>
+          <br>
           <div class="searchWrap">
 
           <input type="text" v-model="keyword" @keyup.enter="fnSearch" /><a href="javascript:;" @click="fnSearch" class="btnSearch btn">검색</a>

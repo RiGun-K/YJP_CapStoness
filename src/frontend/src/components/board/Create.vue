@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1>게시글 작성</h1>
-    <button @click="list" style="float: left;">목록</button>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <br>
+    <h1 style="font-weight: bold">게시글 작성</h1>
+    <button type="button" class="btn btn-outline-primary" @click="list" style="float: left;" >목록</button>
+
     <form>
       <table class="tbAdd">
 
