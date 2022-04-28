@@ -24,8 +24,8 @@ public class Team {
     @Column(name="TEAMCODE")
     private Long teamCode;
 
-//    @OneToMany(mappedBy = "teamCode",cascade = {CascadeType.ALL},orphanRemoval = true)
-//    private List<TeamMember> teamMembers = new ArrayList<>();
+    @OneToMany(mappedBy = "teamCode",cascade = {CascadeType.ALL},orphanRemoval = true)
+    private List<TeamMember> teamMembers = new ArrayList<>();
 
     @Column
     private String teamName;
