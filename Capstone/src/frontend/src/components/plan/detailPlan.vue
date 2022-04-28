@@ -53,11 +53,10 @@
 				<td>{{ value.detailName }}</td>
 				<td>{{ value.detailMemo }}</td>
 				<td>
-					<div
-						v-for="(value1, index) in value.checklists"
-						:key="index"
-					>
+					<div>
 						<button
+							v-for="(value1, index) in value.checklists"
+							:key="index"
 							title="더블클릭하면 삭제됩니다"
 							:class="[
 								{ color_n: value1.checkState == 'n' },
@@ -68,7 +67,6 @@
 						>
 							{{ value1.checkContent }}
 						</button>
-						<p>{{ value1 }}</p>
 					</div>
 				</td>
 				<td>

@@ -3,8 +3,6 @@ package com.example.capstone.domain.Plan;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,7 +23,7 @@ public class Checklist implements Serializable{
     @ManyToOne
     @JsonBackReference
     @JoinColumn(name = "DETAIL_CODE")
-    private Plan_detail detailCode;
+    private PlanDetail detailCode;
 
     @Column
     private char checkState ='n';

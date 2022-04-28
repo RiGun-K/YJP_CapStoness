@@ -3,9 +3,9 @@ package com.example.capstone.service;
 
 
 import com.example.capstone.domain.Plan.Plan;
-import com.example.capstone.domain.Plan.Plan_detail;
+import com.example.capstone.domain.Plan.PlanDetail;
 import com.example.capstone.repository.Plan.PlanRepository;
-import com.example.capstone.repository.Plan.Plan_detailRepository;
+import com.example.capstone.repository.Plan.PlanDetailRepository;
 import com.example.capstone.repository.Plan.TeamRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class PlanService {
 
     public final TeamRepository teamRepository;
     public final PlanRepository planRepository;
-    public final Plan_detailRepository plan_detailRepository;
+    public final PlanDetailRepository plan_detailRepository;
 
 
     public Plan createPlan(Plan plan) {
@@ -30,7 +30,7 @@ public class PlanService {
         return plan;
     }
 
-    public PlanService(TeamRepository teamRepository, PlanRepository planRepository, Plan_detailRepository plan_detailRepository) {
+    public PlanService(TeamRepository teamRepository, PlanRepository planRepository, PlanDetailRepository plan_detailRepository) {
         this.teamRepository = teamRepository;
         this.planRepository = planRepository;
         this.plan_detailRepository = plan_detailRepository;
@@ -53,15 +53,15 @@ public class PlanService {
   return selectPlan;
     }
 
-    public void insertDetailPlan(Plan_detail plan_detail){
+    public void insertDetailPlan(PlanDetail plan_detail){
         plan_detailRepository.save(plan_detail);
 
 
     }
 
-    public List<Plan_detail> loadDetailPlan(Plan_detail plan_detail){
+    public List<PlanDetail> loadDetailPlan(PlanDetail plan_detail){
         System.out.println("서비스받음");
-        List<Plan_detail> planDetails = plan_detailRepository.findByPlanCodeAndDetailDay(plan_detail.getPlanCode(),plan_detail.getDetailDay());
+        List<PlanDetail> planDetails = plan_detailRepository.findByPlanCodeAndDetailDay(plan_detail.getPlanCode(),plan_detail.getDetailDay());
         System.out.println("서비스받음");
         return planDetails;
     }

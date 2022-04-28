@@ -117,8 +117,13 @@ export default {
 				console.log('바로호출됨');
 				this.showingDeleteTeamButton = true;
 			}
-			console.log(this.$store.state.teamCode);
+			console.log(this.$store.state.mcode);
+			console.log(this.$store.state.mcode);
+			console.log(this.$store.state.mcode);
+			console.log(this.$store.state.mcode);
+
 			const url = '/api/loginedTeamCode';
+
 			axios
 				.post(url, {
 					mcode: this.$store.state.mcode,

@@ -1,15 +1,11 @@
 package com.example.capstone.domain.Plan;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +16,7 @@ import java.util.List;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 
 @Entity
-public class Plan_detail{
+public class PlanDetail {
 
 
     @Id

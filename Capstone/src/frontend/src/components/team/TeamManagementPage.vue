@@ -100,7 +100,7 @@ export default {
 					.put(url, {
 						teamName: this.$store.state.insertName,
 						teamState: this.$store.state.open,
-						teamMaster: this.mcode, //$store.state.mcode.mcode,
+						teamMaster: this.mcode,
 					})
 					.then((response) => {
 						if (response.data !== 'n') {
@@ -136,14 +136,8 @@ export default {
 					this.noTeam = '';
 					console.log(response.data);
 					response.data.map((item) => {
-						console.log(item);
-						console.log(item.mcode);
-						console.log(item.mcode);
-						console.log(item.mcode);
 						this.$store.commit('updateMyTeam', item.mcode);
-						console.log(this.$store.state.mcode);
 						this.teamCodeList = item;
-
 						if (item.acception === 'y') {
 							this.teamList.push(item);
 						} else {
@@ -164,7 +158,6 @@ export default {
 			const url = 'http://localhost:9002/api/acceptTeam';
 			const member = { mcode: this.$store.state.mcode.mcode };
 			const tc = { teamCode: teamCode };
-			//	const team = { teamName: teamName };
 
 			axios
 				.post(url, { mcode: member, teamCode: tc })
@@ -181,9 +174,6 @@ export default {
 			const url = 'http://localhost:9002/api/refuseTeam';
 			const member = { mcode: this.$store.state.mcode.mcode };
 			const tc = { teamCode: teamCode };
-			//	const team = { teamName: teamName };
-			console.log(member);
-			console.log(tc);
 			axios
 				.post(url, { mcode: member, teamCode: tc })
 				.then((response) => {
@@ -200,7 +190,6 @@ export default {
 			this.$store.commit('updateTeamName', teamCode.teamCode.teamName);
 			this.$store.state.teamMemberList.length = 0;
 			this.showingTeamMember = true;
-
 			this.$store.state.teamURL = '/TeamMember';
 			const url =
 				'http://localhost:9002/api/loadTeamMemberList/' +
@@ -213,14 +202,9 @@ export default {
 					response.data.map((item) => {
 						console.log(item);
 						this.$store.commit('updateTeamCode', item);
-						// this.$store.commit(
-						// 	'updateTeamCode',
-						// 	item.teamCode.teamCode,
-						// );
 						if (item.acception === 'y') {
 							this.$store.commit('updateTeamMemberList', item);
 						}
-
 						return console.log('teamMembers' + item.mcode.mname);
 					});
 				})

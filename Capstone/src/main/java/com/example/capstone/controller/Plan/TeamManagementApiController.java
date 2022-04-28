@@ -7,10 +7,10 @@ import com.example.capstone.domain.Plan.Team;
 import com.example.capstone.domain.Plan.TeamMember;
 import com.example.capstone.repository.Member.MemberRepository;
 import com.example.capstone.repository.Plan.TeamRepository;
-import com.example.capstone.repository.Plan.Team_MemberRepository;
+import com.example.capstone.repository.Plan.TeamMemberRepository;
 import com.example.capstone.service.PlanService;
+import com.example.capstone.service.TeamMemberService;
 import com.example.capstone.service.TeamService;
-import com.example.capstone.service.Team_MemberService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,27 +23,25 @@ public class TeamManagementApiController {
 
     private final MemberRepository memberRepository;
     private final TeamRepository teamRepository;
-    private final Team_MemberRepository team_memberRepository;
+    private final TeamMemberRepository teamMemberRepository;
     private final PlanService planService;
-    private final Team_MemberService team_memberService;
+    private final TeamMemberService teamMemberService;
     private final TeamService teamService;
 
-    public TeamManagementApiController(MemberRepository memberRepository, TeamRepository teamRepository, Team_MemberRepository team_memberRepository, PlanService planService, Team_MemberService team_memberService, TeamService teamService) {
+    public TeamManagementApiController(MemberRepository memberRepository, TeamRepository teamRepository, TeamMemberRepository teamMemberRepository, PlanService planService, TeamMemberService teamMemberService, TeamService teamService) {
         this.memberRepository = memberRepository;
         this.teamRepository = teamRepository;
-        this.team_memberRepository = team_memberRepository;
+        this.teamMemberRepository = teamMemberRepository;
         this.planService = planService;
-        this.team_memberService = team_memberService;
+        this.teamMemberService = teamMemberService;
         this.teamService = teamService;
     }
 
     @PostMapping("/api/TeamManagementPage/{mcode}")
     public List<TeamMember> teamManagementPage(@PathVariable("mcode") Member mcode) {
-        System.out.println("mcode = " + mcode);
-        List<TeamMember> tm = team_memberRepository.findByMcode(mcode);
-        for (TeamMember teamMember : tm) {
-            System.out.println("teamMember = " + teamMember);
-        }
+        List<TeamMember> tm = teamMemberRepository.findByMcode(mcode);
+
+        // List<TeamMember> tm = team_memberRepository.findByMcode(mcode);
         if (tm.isEmpty()) {
             return null;
         } else return tm;
@@ -52,7 +50,7 @@ public class TeamManagementApiController {
     @GetMapping("/api/loadTeamMemberList/{teamName}")
     public List<TeamMember> loadTeamMemberList(@PathVariable("teamName") String teamName) {
         Optional<Team> teamCode = teamRepository.findByTeamName(teamName);
-        List<TeamMember> teamMcode = team_memberRepository.findByteamCode(teamCode.get());
+        List<TeamMember> teamMcode = teamMemberRepository.findByteamCode(teamCode.get());
         if (teamMcode.isEmpty()) {
             return null;
         } else return teamMcode;
@@ -71,18 +69,18 @@ public class TeamManagementApiController {
 
     @PostMapping("api/addTeamMember")
     public String addTeamMember(@RequestBody TeamMember teamMember) {
-        return team_memberService.addTeamMember(teamMember);
+        return teamMemberService.addTeamMember(teamMember);
     }
 
     @PostMapping("/api/acceptTeam")
     public String acceptTeam(@RequestBody TeamMember teamMember) {
-        team_memberService.acceptTeam(teamMember);
+        teamMemberService.acceptTeam(teamMember);
         return "y";
     }
 
     @PostMapping("/api/refuseTeam")
     public String refuseTeam(@RequestBody TeamMember teamMember) {
-        team_memberService.refuseTeam(teamMember);
+        teamMemberService.refuseTeam(teamMember);
         return "y";
     }
 
@@ -94,8 +92,9 @@ public class TeamManagementApiController {
 
     @PostMapping("/api/loginedTeamCode")
     public TeamMember loginedTeamCode(@RequestBody TeamMember teamMember) {
+        System.out.println("teamMember = " + teamMember);
         System.out.println("logined 받아짐");
-        return team_memberService.loginedTeamCode(teamMember);
+        return teamMemberService.loginedTeamCode(teamMember);
     }
 
     @GetMapping("/api/loadTeamPlans/{teamCode}")
@@ -105,7 +104,7 @@ public class TeamManagementApiController {
 //                .teamCode(1L)
 //                .build();
 
-        return team_memberService.loadTeamPlans(team);
+        return teamMemberService.loadTeamPlans(team);
 
     }
 

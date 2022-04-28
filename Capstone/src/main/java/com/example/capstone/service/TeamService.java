@@ -6,14 +6,19 @@ import com.example.capstone.repository.Plan.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class TeamService {
 
     public void deleteTeam(Team team){
-        System.out.println(team+"aaaaaaaaaaaaaaa");
         teamRepository.delete(team);
+    }
+    public Optional<Team> loadTeamMemberList(String teamName){
+        Optional<Team> teamCode = teamRepository.findByTeamName(teamName);
+        return teamCode;
     }
 
 
