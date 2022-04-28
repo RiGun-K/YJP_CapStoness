@@ -1,7 +1,7 @@
 <template>
   장비 이동
   현재 보관중인 보관함 위치
-  이동할 보관소 or 주소 입력
+  이동할 보관소 or 주소 입력 55
   <br>
   <input type="radio" name="move-option" v-model="moveOption" value="round">장소 <br>
   <input type="radio" name="move-option" v-model="moveOption" value="storage">보관함
