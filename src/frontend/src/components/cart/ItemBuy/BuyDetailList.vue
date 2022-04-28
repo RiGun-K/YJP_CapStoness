@@ -5,7 +5,7 @@
       <div class="content-detail-list">
         <h2>상품분류 : {{ this.content.kindid.kindname }}</h2><br>
         <h2>상품명 : {{ this.content.menuname }}</h2><br>
-        <h2>상품에 대한 설명: {{ this.content.ex }}</h2><br>
+        <h2>상품에 대한 설명0: {{ this.content.ex }}</h2><br>
         <h2>상품가격 : {{ this.content.price }}</h2><br>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
