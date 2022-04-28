@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.9.8"
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-web-services'

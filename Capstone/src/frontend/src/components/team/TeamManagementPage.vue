@@ -125,24 +125,27 @@ export default {
 		TeamManage: function (mcode) {
 			this.mcode = mcode;
 			this.showingTeamList = true;
-
 			this.teamList.length = 0;
 			this.unacceptedTeamCode.length = 0;
-
 			const url = 'http://localhost:9002';
+
 			axios
 				.post(`${url}/api/TeamManagementPage/` + this.mcode)
 				.then((response) => {
+					console.log(response);
 					this.noTeam = '';
-
+					console.log(response.data);
 					response.data.map((item) => {
+						console.log(item);
+						console.log(item.mcode);
+						console.log(item.mcode);
+						console.log(item.mcode);
 						this.$store.commit('updateMyTeam', item.mcode);
-
 						console.log(this.$store.state.mcode);
 						this.teamCodeList = item;
+
 						if (item.acception === 'y') {
 							this.teamList.push(item);
-							// $store.commit('updateTeamList', item);
 						} else {
 							this.unacceptedTeamCode.push(item);
 						}

@@ -1,7 +1,9 @@
 package com.example.capstone.domain.Plan;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +17,8 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
+
 @Entity
 public class Plan_detail{
 
@@ -25,7 +29,7 @@ public class Plan_detail{
     private Long detailCode;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "detailCode",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "detailCode",cascade = {CascadeType.ALL},orphanRemoval = true)
     private List<Checklist> checklists = new ArrayList<Checklist>();
 
     @ManyToOne

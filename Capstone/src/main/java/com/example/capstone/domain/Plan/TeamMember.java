@@ -1,11 +1,10 @@
 package com.example.capstone.domain.Plan;
 
 import com.example.capstone.domain.Member.Member;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,7 +12,9 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
+@ToString
 public class TeamMember {
 
 
@@ -21,13 +22,11 @@ public class TeamMember {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long teamMemberCode;
 
-   // @JsonIgnore
-    @ManyToOne// (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "MCODE")
     private Member mcode;
 
-    // @JsonIgnore
-    @ManyToOne// (fetch = FetchType.LAZY)
+    @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "TEAMCODE")
     private Team teamCode;
 

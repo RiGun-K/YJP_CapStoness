@@ -43,12 +43,7 @@ public class Team_MemberService {
 
         List<TeamMember> checkMember = team_memberRepository.findByTeamCodeAndMcode(teamMember.getTeamCode(), teamMember.getMcode());
         if (checkMember.isEmpty()) {
-            System.out.println("있는지 없는지 확인");
-            System.out.println(teamMember.getTeamMemberCode());
-            System.out.println(teamMember.getAcception());
-
             team_memberRepository.save(teamMember);
-            System.out.println(teamMember.getTeamMemberCode());
             return "y";
         } else {
             System.out.println("존재하는 회원입니다");

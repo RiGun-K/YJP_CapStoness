@@ -65,7 +65,7 @@ export default {
 		loadTeamPlans: function () {
 			const url = '/api/loadTeamPlans/';
 			axios
-				.get(url + this.$store.state.teamCode.team.teamCode)
+				.get(url + this.$store.state.teamCode.teamCode.teamCode)
 				.then((response) => {
 					response.data.map((item) => {
 						this.planList.push(item);
@@ -110,8 +110,6 @@ export default {
 			}
 		},
 		showingDeleteTeam: function () {
-			console.log(this.$store.state.mcode.mname);
-
 			if (
 				this.$store.state.mcode.mname ===
 				this.$store.state.teamCode.teamCode.teamMaster
@@ -119,15 +117,12 @@ export default {
 				console.log('바로호출됨');
 				this.showingDeleteTeamButton = true;
 			}
-
-			console.log(this.$store.state.mcode);
-			console.log(this.$store.state.teamCode.team);
-
+			console.log(this.$store.state.teamCode);
 			const url = '/api/loginedTeamCode';
 			axios
 				.post(url, {
 					mcode: this.$store.state.mcode,
-					teamCode: this.$store.state.teamCode.team,
+					teamCode: this.$store.state.teamCode.teamCode,
 				})
 				.then((response) => {
 					console.log(response.data);

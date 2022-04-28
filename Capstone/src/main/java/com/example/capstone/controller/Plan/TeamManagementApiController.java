@@ -19,7 +19,7 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping
-public class teamManagementApiController {
+public class TeamManagementApiController {
 
     private final MemberRepository memberRepository;
     private final TeamRepository teamRepository;
@@ -28,7 +28,7 @@ public class teamManagementApiController {
     private final Team_MemberService team_memberService;
     private final TeamService teamService;
 
-    public teamManagementApiController(MemberRepository memberRepository, TeamRepository teamRepository, Team_MemberRepository team_memberRepository, PlanService planService, Team_MemberService team_memberService, TeamService teamService) {
+    public TeamManagementApiController(MemberRepository memberRepository, TeamRepository teamRepository, Team_MemberRepository team_memberRepository, PlanService planService, Team_MemberService team_memberService, TeamService teamService) {
         this.memberRepository = memberRepository;
         this.teamRepository = teamRepository;
         this.team_memberRepository = team_memberRepository;
@@ -39,7 +39,11 @@ public class teamManagementApiController {
 
     @PostMapping("/api/TeamManagementPage/{mcode}")
     public List<TeamMember> teamManagementPage(@PathVariable("mcode") Member mcode) {
-        List<TeamMember> tm = team_memberRepository.findBymcode(mcode);
+        System.out.println("mcode = " + mcode);
+        List<TeamMember> tm = team_memberRepository.findByMcode(mcode);
+        for (TeamMember teamMember : tm) {
+            System.out.println("teamMember = " + teamMember);
+        }
         if (tm.isEmpty()) {
             return null;
         } else return tm;
@@ -48,9 +52,7 @@ public class teamManagementApiController {
     @GetMapping("/api/loadTeamMemberList/{teamName}")
     public List<TeamMember> loadTeamMemberList(@PathVariable("teamName") String teamName) {
         Optional<Team> teamCode = teamRepository.findByTeamName(teamName);
-        System.out.println(teamCode.get());
         List<TeamMember> teamMcode = team_memberRepository.findByteamCode(teamCode.get());
-        System.out.println(teamMcode.get(0));
         if (teamMcode.isEmpty()) {
             return null;
         } else return teamMcode;
@@ -92,6 +94,7 @@ public class teamManagementApiController {
 
     @PostMapping("/api/loginedTeamCode")
     public TeamMember loginedTeamCode(@RequestBody TeamMember teamMember) {
+        System.out.println("logined 받아짐");
         return team_memberService.loginedTeamCode(teamMember);
     }
 

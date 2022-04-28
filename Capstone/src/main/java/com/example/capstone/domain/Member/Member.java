@@ -150,4 +150,22 @@ public class Member {
     public void setMLD(String MLD) {
         this.MLD = MLD;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "MCode=" + MCode +
+                ", MID='" + MID + '\'' +
+                ", MPass='" + MPass + '\'' +
+                ", MNick='" + MNick + '\'' +
+                ", MPH='" + MPH + '\'' +
+                ", MMail='" + MMail + '\'' +
+                ", Mzc='" + Mzc + '\'' +
+                ", MAdd='" + MAdd + '\'' +
+                ", MSC='" + MSC + '\'' +
+                ", MSD='" + MSD + '\'' +
+                ", MLD='" + MLD + '\'' +
+                ", mname='" + mname + '\'' +
+                '}';
+    }
 }

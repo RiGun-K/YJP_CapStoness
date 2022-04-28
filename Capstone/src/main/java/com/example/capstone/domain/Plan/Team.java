@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,6 +15,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 public class Team {
 
@@ -22,9 +24,8 @@ public class Team {
     @Column(name="TEAMCODE")
     private Long teamCode;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
-    @OneToMany(mappedBy = "teamMemberCode",cascade = {CascadeType.ALL},orphanRemoval = true)
-    private List<TeamMember> teamMembers;
+//    @OneToMany(mappedBy = "teamCode",cascade = {CascadeType.ALL},orphanRemoval = true)
+//    private List<TeamMember> teamMembers = new ArrayList<>();
 
     @Column
     private String teamName;
