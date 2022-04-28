@@ -6,7 +6,7 @@
     </textarea>
     <br/>
     <input type="radio" name="rg1" @change="radioChange()">동의합니다
-    <input type="radio" name="rg1" @change="falseChange()">동의하지 않습니다.
+    <input type="radio" name="rg2" @change="falseChange()">동의하지 않습니다.
     <br/>
     <button @click="next" :disabled="btnCheck">다음</button>
     <button @click="preExit">취소</button>
@@ -15,7 +15,6 @@
 
 <script>
 export default {
-  //eslint-disable-next-line
   name: "Agreement",
   data(){
     return{

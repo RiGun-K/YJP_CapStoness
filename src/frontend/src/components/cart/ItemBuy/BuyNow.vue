@@ -1,22 +1,19 @@
 <template>
   <div class="buyNow">
     <h2>주문/결제</h2>
-    {{ this.content.menuname }}
     <h3>구매자 정보</h3>
     <table>
       <tr>
         <td class="buy-now-td">이름</td>
-        <td>{{ content.menuname }}</td>
-        {{ content.menuname }}
+        <td>{{ this.Content.mid.mid }}</td>
       </tr>
-      {{ this.content.menuname }}
       <tr>
         <td class="buy-now-td">이메일</td>
-        <td>Tang@naver.com</td>
+        <td>{{ this.Content.mid.mmail }}</td>
       </tr>
       <tr>
         <td class="buy-now-td">휴대폰 번호</td>
-        <td>01012345678</td>
+        <td>{{ this.Content.mid.mph }}</td>
       </tr>
     </table>
 
@@ -24,7 +21,7 @@
     <table>
       <tr>
         <td class="buy-now-td">이름</td>
-        <td><input type="text"></td>
+        <td><input type="text" v-model="Content.mid.mid" readonly></td>
       </tr>
       <tr>
         <td class="buy-now-td">우편번호</td>
@@ -52,11 +49,11 @@
     <table>
       <tr>
         <td class="buy-now-td">상품 이름</td>
-        <td>땡땡땡땡땡상품</td>
+        <td>{{ this.Content.menuname }}</td>
       </tr>
       <tr>
         <td class="buy-now-td">상품 금액</td>
-        <td>200000</td>
+        <td>{{ this.Content.price }}</td>
       </tr>
       <tr>
         <td class="buy-now-td">배송비</td>
@@ -80,7 +77,7 @@
       </tr>
     </table>
 
-    <h5>구매조건 확인 및 결제대행 서비스 약관 동의<button @click="checkBuy()">보기</button></h5>
+    <h5>구매조건 확인 및 결제대행 서비스 약관 동의 <button @click="checkBuy()">보기</button></h5>
     <h5>개인정보 제3자 제공 동의<button>보기</button></h5>
 
     <h5 class="buy-now-info-check">위 주문 내용을 확인하였으며, 회원 본인은 개인정보 이용 및 제공(해외직구의 경우 국외제공) 및 결제에 동의합니다.</h5>
@@ -119,7 +116,8 @@ export default {
       price: 1000,
       buyCheck: false,
 
-      content: [],
+      Content: [],
+
     }
   },
 
@@ -135,8 +133,9 @@ export default {
       axios.get('http://localhost:9002/api/product_detail/' + this.id)
           .then(res => {
             console.log(res.data);
-            this.content = res.data;
-            console.log(this.content.menuname);
+            this.Content = res.data;
+            console.log(this.Content.menuname);
+            //
           })
           .catch(e => {
             console.log(e);
