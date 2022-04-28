@@ -1,6 +1,8 @@
 <template>
   <div>
-    <H1>게시판 상세보기</H1>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <br><H2 style="font-weight: bold">게시판 상세보기</H2>
+    <br>
     <div class="AddWrap">
       <form>
         <table class="tbAdd">
@@ -29,8 +31,8 @@
 
   <div class="dap_ins">
       <div style="margin-top:30px; ">
-        <textarea name="content" class="reply_content" id="re_content" ></textarea>
-        <button id="rep_bt" class="re_bt">댓글</button>
+        <textarea name="commenttext" v-model="commenttext" class="reply_content" id="re_content" ></textarea>
+        <button @click="comments" id="rep_bt" class="re_bt">댓글</button>
       </div>
 
   </div>
@@ -46,7 +48,6 @@
 
 <script>
 import axios from "axios"
-import Read from "@/components/board/Read";
 import store from "@/store";
 
 export default {
@@ -120,6 +121,24 @@ export default {
     list() {
       this.$router.push({
         path: '/read'
+      })
+    },
+
+    comments(){
+      const data= {
+        mid: store.getters.getLoginState.loginState,
+        commenttext: this.commenttext,
+      }
+      console.log(data);
+      axios.post('/comment/list', data)
+      .then((res) => {
+        console.log("성공" + res.data)
+      })
+      .catch((ex) => {
+        console.log("fail", ex)
+      })
+      this.$router.push({
+        path: '/Read'
       })
     }
 
