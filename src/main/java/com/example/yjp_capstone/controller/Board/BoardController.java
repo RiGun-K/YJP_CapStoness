@@ -1,12 +1,10 @@
 package com.example.yjp_capstone.controller.Board;
 
 import com.example.yjp_capstone.domain.Board.Writer;
-import com.example.yjp_capstone.domain.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import com.example.yjp_capstone.dto.Board.BoardDTO;
 import com.example.yjp_capstone.repository.Board.BoardRepository;
 import com.example.yjp_capstone.repository.Member.MemberRepository;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

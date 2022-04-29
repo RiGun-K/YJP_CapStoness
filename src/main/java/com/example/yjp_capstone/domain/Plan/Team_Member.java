@@ -1,7 +1,6 @@
 package com.example.yjp_capstone.domain.Plan;
 
-import com.example.yjp_capstone.domain.Member.Member;
-import org.hibernate.annotations.ColumnDefault;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 
 import javax.persistence.*;
 

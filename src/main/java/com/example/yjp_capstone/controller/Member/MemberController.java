@@ -1,11 +1,11 @@
 package com.example.yjp_capstone.controller.Member;
 
-import com.example.yjp_capstone.domain.Member.Company;
-import com.example.yjp_capstone.domain.Member.Member;
-import com.example.yjp_capstone.domain.Member.PhCheck;
+import com.example.yjp_capstone.domain.storage.Member.Company;
+import com.example.yjp_capstone.domain.storage.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.PhCheck;
 import com.example.yjp_capstone.repository.Member.CompanyRepository;
 import com.example.yjp_capstone.repository.Member.MemberRepository;
-import com.example.yjp_capstone.domain.Member.MailCheck;
+import com.example.yjp_capstone.domain.storage.Member.MailCheck;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

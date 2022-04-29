@@ -1,8 +1,5 @@
 package com.example.yjp_capstone.dto.Product;
 
-import com.example.yjp_capstone.domain.Member.Member;
-import com.example.yjp_capstone.domain.Product.Kind;
-import com.example.yjp_capstone.domain.Product.Menu;
 import lombok.*;
 
 import java.time.LocalDateTime;

@@ -1,9 +1,8 @@
 package com.example.yjp_capstone.repository.Plan;
 
-import com.example.yjp_capstone.domain.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import com.example.yjp_capstone.domain.Plan.Team_Member;
 
-import com.example.yjp_capstone.domain.Plan.Plan;
 import com.example.yjp_capstone.domain.Plan.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

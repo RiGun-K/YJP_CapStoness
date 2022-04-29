@@ -1,4 +1,4 @@
-package com.example.yjp_capstone.domain.Member;
+package com.example.yjp_capstone.domain.storage.Member;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

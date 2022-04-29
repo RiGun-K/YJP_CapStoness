@@ -1,8 +1,7 @@
 package com.example.yjp_capstone.domain.Board;
 
-import com.example.yjp_capstone.domain.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

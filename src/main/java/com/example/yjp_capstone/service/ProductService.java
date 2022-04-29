@@ -1,13 +1,11 @@
 package com.example.yjp_capstone.service;
 
-import com.example.yjp_capstone.domain.Member.Member;
-import com.example.yjp_capstone.dto.Product.MenuDTO;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import com.example.yjp_capstone.repository.Member.MemberRepository;
 import com.example.yjp_capstone.repository.Product.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service

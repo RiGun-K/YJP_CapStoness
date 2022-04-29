@@ -1,7 +1,7 @@
 package com.example.yjp_capstone.controller.Plan;
 
 
-import com.example.yjp_capstone.domain.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import com.example.yjp_capstone.domain.Plan.Plan;
 import com.example.yjp_capstone.domain.Plan.Team;
 import com.example.yjp_capstone.domain.Plan.Team_Member;
@@ -11,7 +11,6 @@ import com.example.yjp_capstone.repository.Plan.Team_MemberRepository;
 import com.example.yjp_capstone.service.PlanService;
 import com.example.yjp_capstone.service.TeamService;
 import com.example.yjp_capstone.service.Team_MemberService;
-import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

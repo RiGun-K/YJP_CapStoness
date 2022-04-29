@@ -1,7 +1,7 @@
 package com.example.yjp_capstone.repository.Storage;
 
 
-import com.example.yjp_capstone.domain.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import com.example.yjp_capstone.domain.storage.Storage;
 import com.example.yjp_capstone.domain.storage.StorageManager;
 import org.springframework.data.jpa.repository.JpaRepository;

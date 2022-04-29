@@ -1,17 +1,13 @@
 package com.example.yjp_capstone.controller.Product;
 
-import com.example.yjp_capstone.config.MD5Generator;
-import com.example.yjp_capstone.domain.Board.Writer;
-import com.example.yjp_capstone.domain.Member.Member;
+import com.example.yjp_capstone.domain.storage.Member.Member;
 import com.example.yjp_capstone.domain.Product.Kind;
 import com.example.yjp_capstone.domain.Product.Menu;
-import com.example.yjp_capstone.dto.Board.BoardDTO;
 import com.example.yjp_capstone.dto.Product.MenuDTO;
 import com.example.yjp_capstone.repository.Member.MemberRepository;
 import com.example.yjp_capstone.repository.Product.KindRepository;
 import com.example.yjp_capstone.repository.Product.MenuRepository;
 import com.example.yjp_capstone.service.ProductService;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

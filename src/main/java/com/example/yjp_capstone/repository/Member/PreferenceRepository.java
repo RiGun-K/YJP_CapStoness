@@ -1,6 +1,6 @@
 package com.example.yjp_capstone.repository.Member;
 
-import com.example.yjp_capstone.domain.Member.Preference;
+import com.example.yjp_capstone.domain.storage.Member.Preference;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

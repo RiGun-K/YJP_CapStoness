@@ -185,28 +185,32 @@ export default {
             // msg += '결제 금액 : ' + rsp.paid_amount
             // msg += '카드 승인번호 : ' + rsp.apply_num
             // alert(msg)
-            alert(rsp.paymentDate)
-            let data = {
-              zip: this.zip,
-              detailAddress: this.detailAddress,
-              getterName: this.getterName,
-              getterPhoneNumber: this.getterPhoneNumber,
-              deliveryMessage: this.deliveryMessage
-            }
-
-            axios.post('/api/buyData', data)
-                .then((res)=>{
-                  console.log(res);
-                })
-                .catch((err)=>{
-                  console.log(err)
-                });
 
             window.location.href = 'http://localhost:8081/itemBuy/buyComplete'
           } else {
             let msg = '결제에 실패하였습니다.'
             msg += '에러 내용 : ' + rsp.error_msg
             alert(msg)
+            let data = {
+              MID: this.Content.mid.mcode,
+              deliveryZipcode: this.zip,
+              deliveryAddress: this.detailAddress,
+              deliveryGetter: this.getterName,
+              deliveryGetterTel: this.getterPhoneNumber,
+              deliveryRequest: this.deliveryMessage,
+              orderPrice: this.price,
+              orderType: rsp.pay_method,
+              paymentCode: rsp.merchant_uid,
+              orderState: '2'
+            }
+
+            this.axios.post('/api/buyData', data)
+                .then((res)=>{
+                  console.log(res);
+                })
+                .catch((err)=>{
+                  console.log(err)
+                });
             window.location.href = 'http://localhost:8081/itemBuy/buyComplete'
           }
         })
