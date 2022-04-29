@@ -1,5 +1,7 @@
 package com.example.yjp_capstone.domain.storage;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class StorageBox {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private long storageBoxCode;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "storageCode")
     private Storage storageCode;

@@ -52,18 +52,23 @@
         </div>
 
         <div class="storage-view">
-
-          <div class="storage-box" v-for="(box,index) in boxList" :key="index">
-
-            <ul>
-              <li>보관함 이름: {{ box.storageBoxName }}</li>
-              <li>보관함 상태:<p v-if="box.storageBoxState == '0'">사용안함</p>
-                <p v-else-if="box.storageBoxState == '1' ">사용중</p>
-
-              </li>
-
-            </ul>
-          </div>
+          <table class="storage-box">
+            <thead>
+            <tr>
+              <th>보관함</th>
+              <th>상태</th>
+              <th>수정</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  v-for="(box,index) in boxList.storageBoxes" :key="index">
+              <td>{{ box.storageBoxName }}</td>
+              <td><p v-if="box.storageBoxState == '0'">사용안함</p>
+                <p v-else-if="box.storageBoxState == '1' ">사용중</p></td>
+              <td><button>수정</button></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -111,7 +116,7 @@ export default {
             this.boxList = resp.data
             console.log('resp.data')
             console.log(resp.data)
-            let storageName = this.boxList[0].storageCode.storageName
+            let storageName = this.boxList.storageName
             this.name = storageName
             this.GetManger(storageCode)
             this.memberIdCheck = false
@@ -163,7 +168,8 @@ export default {
     },
     postManager() {
       let memberId = this.memberId
-      let storageCode = this.boxList[0].storageCode.storageCode
+      let storageCode = this.boxList.storageCode
+      console.log('storageCode')
       console.log(storageCode)
       let manager ={
         member : memberId,
@@ -175,8 +181,10 @@ export default {
               console.log(res.data.result)
               if (res.data.result === 'ok') {
                 console.log('생성')
+                alert('추가되었습니다')
                 this.GetManger(storageCode)
                 this.clearInput()
+                this.memberIdCheck = false
               } else {
                 alert('추가 되지 않음')
               }

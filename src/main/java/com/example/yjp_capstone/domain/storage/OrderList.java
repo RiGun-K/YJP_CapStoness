@@ -26,8 +26,6 @@ public class OrderList {
 //    @JoinColumn(unique = true)
 //    private Delivery deliveryCode;
 
-    public OrderList() {
-    }
 
     public OrderList(Member MCode) {
         this.MCode = MCode;
@@ -43,6 +41,11 @@ public class OrderList {
         this.orderPrice = orderPrice;
         this.orderType = orderType;
     }
+
+    public OrderList() {
+
+    }
+
 
     public long getOrderCode() {
         return orderCode;

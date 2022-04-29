@@ -1,5 +1,6 @@
 package com.example.yjp_capstone.domain.storage;
 
+
 import com.example.yjp_capstone.domain.Member.Member;
 
 import javax.persistence.*;

@@ -2,20 +2,20 @@
   <div class="user-storage-view">
     <h3>보관소 리스트 페이지</h3>
 
-      <div class="storage-get" v-for="(storage,index) in storageList" :key="index" @click="GetStorageDetail(storage.storageCode)"
-           style="margin-bottom: 3%">
-        <div class="card" style="width: 35%; font-weight: bolder; margin-left: 7%">
-          <div class="card-body">
-            이름: {{ storage.storageName }}
-          </div>
-          <div class="card-body">
-            주소: {{ storage.storageAddress }}
-          </div>
+    <div class="storage-get" v-for="(storage,index) in storageList" :key="index" @click="GetStorageDetail(storage.storageCode)"
+         style="margin-bottom: 3%">
+      <div class="card" style="width: 35%; font-weight: bolder; margin-left: 7%">
+        <div class="card-body">
+          이름: {{ storage.storageName }}
+        </div>
+        <div class="card-body">
+          주소: {{ storage.storageAddress }}
         </div>
       </div>
-      <div style="float: right;">
-        <div id="map"></div>
-      </div>
+    </div>
+    <div style="float: right;">
+      <div id="map"></div>
+    </div>
 
     <div v-if="check">
       <div class="storage">
@@ -29,8 +29,8 @@
           <div class="storage-box" v-for="(box,index) in boxList.storageBoxes" :key="index">
             <ul>
               <li>보관함 이름: {{ box.storageBoxName }}</li>
-              <li>보관함 상태: {{ box.storageBoxState }}<p v-if="box.storageBoxState == '0'">사용가능</p>
-                            <p v-else>사용불가능</p>
+              <li>보관함 상태:<p v-if="box.storageBoxState == '0'">사용가능</p>
+                <p v-else>사용불가능</p>
               </li>
             </ul>
           </div>
@@ -46,7 +46,7 @@ import axios from "axios";
 import store from "@/store";
 
 export default {
-  name: "UserStorageView",
+  name: "StorageMoveBox",
   components: {},
   created() {
     this.memberId = store.getters.getLoginState.loginState

@@ -17,19 +17,16 @@
         </h3>
 
         <span class="input-group mb-3">
-          <input type="password" name="MPASS" v-model="password" class="form-control" placeholder="비밀번호 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
+          <input type="text" name="MPASS" v-model="password" class="form-control" placeholder="비밀번호 입력" aria-label="Recipient's username" aria-describedby="button-addon2">
           <button class="btn btn-outline-secondary" type="button" id="button-addon2" @click="login">로그인</button>
         </span>
         <span class="error_next_box"></span>
         <br>
         <div class="btn_area">
-          <button type="button" @click="signup" id="btnJoin" class="btn_Bottom">
+          <button type="button" @click="signup" id="btnJoin">
             <span>회원가입</span>
           </button>
-          <br/><br/>
-          <button type="button" @click="search" id="btnSearch" class="btn_Bottom">
-            <span>아이디/비번찾기</span>
-          </button>
+
         </div>
       </div>
     </div>
@@ -50,12 +47,8 @@ export default {
   },
   methods: {
     signup() {
-      this.$router.push('agreement')
+      this.$router.push('signup')
     },
-    search(){
-      this.$router.push('searchSelect')
-    }
-    ,
     login(){
       if(this.userID==''){
         alert("아이디를 입력해주세요")
@@ -190,7 +183,7 @@ select {
 .btn_area {
   margin: 20px 0 91px;
 }
-.btn_Bottom {
+#btnJoin {
   width: 100%;
   padding: 21px 0 17px;
   border: 0;

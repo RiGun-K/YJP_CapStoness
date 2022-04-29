@@ -46,4 +46,8 @@ public class StorageEquipment {
     public OrderList getOrderCode() {
         return orderCode;
     }
+
+    public void setOrderCode(OrderList orderCode) {
+        this.orderCode = orderCode;
+    }
 }

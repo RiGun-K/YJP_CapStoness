@@ -5,7 +5,7 @@
     <h5 class="storage-name-h5">보관소 이름:{{ name }}</h5>
 
     <div class="storage-view">
-      <div class="storage-box" v-for="(box,index) in boxList" :key="index">
+      <div class="storage-box" v-for="(box,index) in boxList.storageBoxes" :key="index">
         <ul>
           <li>보관함 이름: {{ box.storageBoxName }}</li>
           <li>보관함 상태:<p v-if="box.storageBoxState == '0'">사용가능</p>
@@ -16,9 +16,9 @@
     </div>
     <div style="display: flex; margin-bottom: 1.5%">
       <h5 style="margin-left: 3%" >사용하실 보관함을 선택하세요</h5>
-      <select  class="form-select" style="width:10%; margin-left: 2%; margin-top: -1%" v-model="boxCode" @click="findTime(boxCode)">
+      <select  class="form-select" style="width:10%; margin-left: 2%; margin-top: -1%"  v-model="boxCode" @click="findTime(boxCode)">
         <option value="선택">선택</option>
-        <option :value="box.storageBoxCode" v-for="(box,index) in boxList" :key="index">{{ box.storageBoxName }}</option>
+        <option :value="box.storageBoxCode" v-for="(box,index) in boxList.storageBoxes" :key="index">{{ box.storageBoxName }}</option>
       </select>
     </div>
     <div v-if="stateCheck">
@@ -38,7 +38,10 @@
             :disabledDates="disabledDates" />
       </div>
       <div>
-        <button class="pay-btn" @click="pay">결제</button>
+        결제금액 : {{form.price}}원
+      </div>
+      <div>
+        <button class="pay-btn" @click="pay">다음</button>
       </div>
     </div>
 
@@ -51,9 +54,9 @@ import axios from "axios";
 
 import Datepicker  from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
+import store from "@/store";
 
 export default {
-  //eslint-disable-next-line
   name: "StorageDetail",
   components:{
     Datepicker
@@ -63,7 +66,9 @@ export default {
         .then((res) => {
           console.log(res.data)
           this.boxList = res.data
-          this.name = this.boxList[1].storageCode.storageName
+          console.log('this.boxList')
+          console.log(this.boxList)
+          this.name = this.boxList.storageName
         })
         .catch((err) => {
           console.log(err)
@@ -71,7 +76,8 @@ export default {
   },
   created() {
     this.id = this.$route.params.storageCode
-    this.userId = this.$route.params.memberId
+    this.form.userId = store.getters.getLoginState.loginState
+    console.log('this.userId')
     console.log(this.userId)
   },
   data() {
@@ -86,9 +92,11 @@ export default {
       boxCode:'선택',
       form:{
         userId:'',
+        storageName:'',
         storageBoxCode:'',
         useStorageStartTime:'',
-        useStorageEndTime:''
+        useStorageEndTime:'',
+        price:''
       },
       today: new Date(),
       useTimeList:[],
@@ -96,7 +104,20 @@ export default {
       stateCheck:false
     }
   },
+  watch:{
+    boxCode:function (newBoxCode){
+      this.boxPrice(newBoxCode)
+    }
+  },
   methods:{
+    boxPrice(newBoxCode){
+      axios.get('/api/boxPrice/'+newBoxCode)
+      .then(res=>{
+        console.log(res.data)
+        this.form.price = res.data
+      })
+    },
+
     backPage(){
       this.$router.push('/storageView')
     },
@@ -110,9 +131,9 @@ export default {
             this.useTimeList = res.data
             console.log(res.data)
 
-            for (let i = 0; i < this.boxList.length; i++) {
-              if(boxCode == this.boxList[i].storageBoxCode){
-                if(this.boxList[i].storageBoxState == '0'){
+            for (let i = 0; i < this.boxList.storageBoxes.length; i++) {
+              if(boxCode == this.boxList.storageBoxes[i].storageBoxCode){
+                if(this.boxList.storageBoxes[i].storageBoxState == '0'){
                   this.stateCheck = true
                 }else{
                   this.stateCheck = false
@@ -146,6 +167,7 @@ export default {
           })
     },
     pay(){
+
       if(this.date ==null){
         alert('날짜 선택하세요')
         return
@@ -157,27 +179,18 @@ export default {
         alert('보관함를 선택하세요')
         return
       }
+      this.form.storageName = this.name
       this.form.storageBoxCode = this.boxCode
-      this.form.userId = this.userId
       this.form.useStorageStartTime = this.startDay
       this.form.useStorageEndTime = this.endDay
-
-      axios.post('/api/payStorageBox', this.form )
-          .then(res=>{
-            alert('결제가 완료 되었습니다.')
-            console.log(res)
-            this.date = []
-            this.startDay = ''
-            this.endDay = ''
-            this.form.storageBoxCode = ''
-            this.form.userId = ''
-            this.form.useStorageStartTime = ''
-            this.form.useStorageEndTime = ''
-            this.$router.push("/storageView");
-          })
-          .catch(err=>{
-            console.log(err)
-          })
+      this.$router.push({name:"storagePay", params:this.form})
+      this.date = []
+      this.startDay = ''
+      this.endDay = ''
+      this.form.storageBoxCode = ''
+      this.form.userId = ''
+      this.form.useStorageStartTime = ''
+      this.form.useStorageEndTime = ''
     }
   }
 

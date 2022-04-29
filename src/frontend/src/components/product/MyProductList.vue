@@ -6,7 +6,7 @@
     <table class="table table-striped">
       <thead>
       <tr>
-        <th>#</th>
+        <th>메뉴번호</th>
         <th>분류</th>
         <th>메뉴명</th>
         <th>설명</th>

@@ -12,10 +12,10 @@ export default {
     StorageDetail
   },
   mounted() {
-    if(store.getters.getLoginState.stateCode != 4){
-      this.$router.push('/')
-      alert('보관소 매니저만 확인이 가능합니다')
-    }
+    // if(store.getters.getLoginState.stateCode !== 4){
+    //   this.$router.push('/')
+    //   alert('보관소 매니저만 확인이 가능합니다')
+    // }
   }
 }
 </script>

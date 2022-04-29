@@ -1,11 +1,14 @@
 package com.example.yjp_capstone.domain.storage;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity
 @Table(name="STORAGE")
 public class Storage {  // 보관소
@@ -14,13 +17,13 @@ public class Storage {  // 보관소
     @GeneratedValue(strategy=GenerationType.AUTO) //int.autoincrement
     private long storageCode;
 
-    @Column(length = 50)
+    @Column
     private String storageName;
 
-    @Column(length = 50)
+    @Column
     private String storageZipcode;
 
-    @Column(length = 50)
+    @Column
     private String storageAddress;
 
     @Column
@@ -125,4 +128,4 @@ public class Storage {  // 보관소
     public void setStorageBoxes(List<StorageBox> storageBoxes) {
         this.storageBoxes = storageBoxes;
     }
- }
+}

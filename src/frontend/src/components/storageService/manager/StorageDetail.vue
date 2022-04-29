@@ -1,26 +1,26 @@
 <template>
 
   <!--  관리하는 보관함 보기 -->
-  <div v-if="managerCheck">
     <div class="storage">
-      보관소 이름:{{name}}
+      보관소 이름: {{this.storageList.storageName}}
       <div class="storage-view">
-        <div class="storage-box" v-for="(storage,index) in storageBox" :key="index" @click="modalViewChk(storage.storageBoxCode)">
-            <div>
-              <ul>
-                <li>보관함 이름: {{ storage.storageBoxName }}</li>
-                <li>보관함 상태:<p v-if="storage.storageBoxState == '0'">사용안함</p>
-                  <p v-else-if="storage.storageBoxState == '1' ">사용중</p>
-                  <p v-else-if="storage.storageBoxState == '2' ">결제완료</p>
-                </li>
-              </ul>
-            </div>
+        <div class="storage-box" v-for="(storage,index) in storageList.storageBoxes" :key="index"
+             @click="modalViewChk(storage.storageBoxCode)">
+          <div>
+            <ul>
+              <li>보관함 이름: {{ storage.storageBoxName }}</li>
+              <li>보관함 상태:<p v-if="storage.storageBoxState == '0'">사용안함</p>
+                <p v-else-if="storage.storageBoxState == '2' ">사용중</p>
+                <p v-else-if="storage.storageBoxState == '1' ">결제완료</p>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-<!-- 모달-->
+
+  <!-- 모달-->
   <div v-if="modalView">
     <button @click="modalView = false">X</button>
     <div>
@@ -33,18 +33,18 @@
 import axios from "axios";
 import store from "@/store"
 import BoxModalDetail from "@/components/storageService/manager/BoxModalDetail.vue";
+
 export default {
   name: "StorageDetail",
-  components:{
+  components: {
     BoxModalDetail
   },
   data() {
     return {
       managerId: '',
-      managerCheck:false,
-      storageBox:[],
-      name:'',
-      modalView:false,
+      storageList: '',
+      name: '',
+      modalView: false,
       modal: false,
       message: '',
       boxCode: ''
@@ -52,36 +52,38 @@ export default {
   },
   mounted() {
     this.managerId = store.getters.getLoginState.loginState
-    axios.get('/api/managerCheck/'+this.managerId)
-        .then(res=>{
+    // if(store.getters.getLoginState.stateCode !== 5){
+    //   this.$router.push('/')
+    //   alert('보관소 매니저만 확인이 가능합니다')
+    // }
+    axios.get('/api/managerCheck/' + this.managerId)
+        .then(res => {
           console.log(res)
-          if(res.data.result=='ok'){
+          if (res.data.result == 'ok') {
             console.log('확인')
-            this.managerCheck = !this.managerCheck
+            axios.get('/api/getManagerStorage/' + this.managerId)
+                .then(res => {
+                  console.log(res.data)
+                  this.storageList  = res.data
 
-            if(this.managerCheck){
-              axios.get('/api/getManagerStorage/'+this.managerId)
-                  .then(res=>{
-                    console.log(res.data)
-                    this.storageBox = res.data
-                    this.name = this.storageBox[1].storageCode.storageName
-                    this.managerId = ''
-                  })
-                  .catch(err=>{
-                    console.log(err)
-                  })
-            }
-          }else {
-            console.log("안돼")
+                  console.log(this.storageList.storageName)
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+          }else{
+            alert('권한이 없습니다')
           }
-        })
+        }).catch(err=>{
+          console.log(err)
+    })
   },
-  methods:{
-    modalViewChk(storage){
+  methods: {
+    modalViewChk(storage) {
       // console.log('post storageCode')
       // console.log(storage)
       this.boxCode = storage
-      if(!this.modalView){
+      if (!this.modalView) {
         this.modalView = !this.modalView
       }
 
@@ -126,7 +128,6 @@ export default {
 .storage {
   border: solid 3px #42b983;
 }
-
 
 
 </style>
