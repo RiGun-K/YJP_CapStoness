@@ -29,6 +29,8 @@
   </div>
 
 
+  <button @click="commentsList" class="btn" style="float: left;">댓글확인</button>
+
   <div class="dap_ins">
       <div style="margin-top:30px; ">
         <textarea name="commenttext" v-model="commenttext" class="reply_content" id="re_content" ></textarea>
@@ -137,9 +139,20 @@ export default {
       .catch((ex) => {
         console.log("fail", ex)
       })
-      this.$router.push({
-        path: '/Read'
-      })
+      // this.$router.push({
+      //   path: '/Read'
+      // })
+    },
+
+    commentsList() {
+      axios.get('/api/commentsList' )
+          .then((res) => {
+            console.log(res.data);
+            this.listss = res.data;
+          })
+          .catch((ex) =>{
+            console.log("fail", ex)
+          })
     }
 
   }

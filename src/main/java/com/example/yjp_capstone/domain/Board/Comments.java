@@ -1,6 +1,7 @@
 package com.example.yjp_capstone.domain.Board;
 
 
+import com.example.yjp_capstone.domain.Member.Member;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -13,28 +14,34 @@ import java.time.LocalDateTime;
 public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int writer_code;
+    private int comment_code;
 
     @Column()
     private String commenttext;
     @CreatedDate
     private LocalDateTime commentdate;
 
-    public Comments(String commenttext, LocalDateTime commentdate){
+    @ManyToOne()
+    @JoinColumn(name = "MID")
+    private Member MID;
+
+    public Comments(int comment_code, String commenttext, LocalDateTime commentdate, Member MID){
+        this.comment_code = comment_code;
         this.commenttext = commenttext;
         this.commentdate = commentdate;
+        this.MID = MID;
     }
 
     public Comments() {
 
     }
 
-    public int getWriter_code() {
-        return writer_code;
+    public int getComment_code() {
+        return comment_code;
     }
 
-    public void setWriter_code(int writer_code) {
-        this.writer_code = writer_code;
+    public void setComment_code(int comments_code) {
+        this.comment_code = comments_code;
     }
 
     public String getCommenttext() {
@@ -51,5 +58,13 @@ public class Comments {
 
     public void setCommentdate(LocalDateTime commentdate) {
         this.commentdate = commentdate;
+    }
+
+    public Member getMID() {
+        return MID;
+    }
+
+    public void setMID(Member MID) {
+        this.MID = MID;
     }
 }
