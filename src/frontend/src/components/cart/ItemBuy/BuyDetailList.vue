@@ -5,7 +5,7 @@
       <div class="content-detail-list">
         <h2>상품분류 : {{ this.content.kindid.kindname }}</h2><br>
         <h2>상품명 : {{ this.content.menuname }}</h2><br>
-        <h2>상품에 대한 설명0: {{ this.content.ex }}</h2><br>
+        <h2>상품에 대한 설명: {{ this.content.ex }}</h2><br>
         <h2>상품가격 : {{ this.content.price }}</h2><br>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -20,7 +20,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: "BuyDetailList",
   created() {
@@ -33,7 +32,6 @@ export default {
       image: require('@/assets/camp1.jpg'),
       // file: this.content.origFilename,
     }
-
   },
   methods: {
     DataList() {
@@ -50,7 +48,6 @@ export default {
             console.log(e);
           })
     },
-
     buyData() {
       this.$router.push({
         path: `/itemBuy/buyNow/${this.content.menuid}`
@@ -61,7 +58,6 @@ export default {
         path: "/cart"
       })
     }
-
   }
 }
 </script>
@@ -77,7 +73,6 @@ export default {
   text-decoration: none;
   display: inline-block;
 }
-
 .d-grid gap-2 d-md-flex justify-content-md-end {
   margin: auto;
   width: 100%;

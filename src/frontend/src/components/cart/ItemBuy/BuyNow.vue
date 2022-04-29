@@ -1,22 +1,19 @@
 <template>
   <div class="buyNow">
     <h2>주문/결제</h2>
-    {{ this.content.menuname }}
     <h3>구매자 정보</h3>
     <table>
       <tr>
         <td class="buy-now-td">이름</td>
-        <td>{{ content.menuname }}</td>
-        {{ content.menuname }}
+        <td>{{ this.Content.mid.mid }}</td>
       </tr>
-      {{ this.content.menuname }}
       <tr>
         <td class="buy-now-td">이메일</td>
-        <td>Tang@naver.com</td>
+        <td>{{ this.Content.mid.mmail }}</td>
       </tr>
       <tr>
         <td class="buy-now-td">휴대폰 번호</td>
-        <td>01012345678</td>
+        <td>{{ this.Content.mid.mph }}</td>
       </tr>
     </table>
 
@@ -24,7 +21,7 @@
     <table>
       <tr>
         <td class="buy-now-td">이름</td>
-        <td><input type="text"></td>
+        <td><input type="text" v-model="Content.mid.mid"></td>
       </tr>
       <tr>
         <td class="buy-now-td">우편번호</td>
@@ -32,19 +29,19 @@
       </tr>
       <tr>
         <td rowspan='2' class="buy-now-td">배송 주소</td>
-        <td><input size="40" v-bind:value="addr1" v-bind:disabled="addr1" placeholder="기본 주소"></td>
+        <td><input size="40" v-bind:value="basicAddress" v-bind:disabled="basicAddress" placeholder="기본 주소"></td>
       </tr>
       <tr>
         <!--        <td></td>-->
-        <td><input size="40" v-bind:name="addr2" placeholder="상세 주소 입력"> </td>
+        <td><input size="40" v-bind:name="detailAddress" placeholder="상세 주소 입력"> </td>
       </tr>
       <tr>
         <td class="buy-now-td">연락처</td>
-        <td><input type="text"></td>
+        <td><input type="text" v-model="getterPhoneNumber" maxlength="12"></td>
       </tr>
       <tr>
         <td class="buy-now-td">배송 요청사항</td>
-        <td><input size="40" type="text"></td>
+        <td><input v-model="deliveryMessage" size="40" type="text"></td>
       </tr>
     </table>
 
@@ -52,11 +49,11 @@
     <table>
       <tr>
         <td class="buy-now-td">상품 이름</td>
-        <td>땡땡땡땡땡상품</td>
+        <td>{{ this.Content.menuname }}</td>
       </tr>
       <tr>
         <td class="buy-now-td">상품 금액</td>
-        <td>200000</td>
+        <td>{{ this.Content.price }}</td>
       </tr>
       <tr>
         <td class="buy-now-td">배송비</td>
@@ -80,7 +77,7 @@
       </tr>
     </table>
 
-    <h5>구매조건 확인 및 결제대행 서비스 약관 동의<button @click="checkBuy()">보기</button></h5>
+    <h5>구매조건 확인 및 결제대행 서비스 약관 동의 <button @click="checkBuy()">보기</button></h5>
     <h5>개인정보 제3자 제공 동의<button>보기</button></h5>
 
     <h5 class="buy-now-info-check">위 주문 내용을 확인하였으며, 회원 본인은 개인정보 이용 및 제공(해외직구의 경우 국외제공) 및 결제에 동의합니다.</h5>
@@ -105,7 +102,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   name: 'BuyNow',
   created() {
@@ -114,20 +110,22 @@ export default {
   data () {
     return {
       zip: '',
-      addr1: '',
-      addr2: '',
+      basicAddress: '',
+      detailAddress: '',
       price: 1000,
       buyCheck: false,
-
-      content: [],
+      getterName: '',
+      getterPhoneNumber: '',
+      deliveryMessage: '',
+      onlyNumber: true,
+      paymentDate: new Date(),
+      Content: [],
     }
   },
-
   mounted () {
     const IMP = window.IMP
     IMP.init('imp35975601')
   },
-
   methods: {
     DataList() {
       this.id = this.$route.params.menuid;
@@ -135,14 +133,14 @@ export default {
       axios.get('http://localhost:9002/api/product_detail/' + this.id)
           .then(res => {
             console.log(res.data);
-            this.content = res.data;
-            console.log(this.content.menuname);
+            this.Content = res.data;
+            console.log(this.Content.menuname);
+            //
           })
           .catch(e => {
             console.log(e);
           })
     },
-
     showApi () {
       new window.daum.Postcode({
         oncomplete: (data) => {
@@ -161,7 +159,7 @@ export default {
             fullRoadAddr += extraRoadAddr
           }
           this.zip = data.zonecode
-          this.addr1 = fullRoadAddr
+          this.basicAddress = fullRoadAddr
         }
       }).open()
     },
@@ -173,18 +171,37 @@ export default {
           pg: 'html5_inicis',
           pay_method: 'card',
           merchant_uid: 'merchant_' + new Date().getTime(),
-          name: '상품명',
+          name: this.Content.menuname,
           amount: this.price,
-          buyer_tel: '01012345678',
+          buyer_tel: this.getterPhoneNumber,
+          buyer_name: this.Content.mid.mid,
+          buyer_email: this.Content.mid.mmail,
           confirm_url: ''
         }, (rsp) => {
           if (rsp.success) {
-            let msg = '결제가 완료되었습니다.'
-            msg += '고유ID : ' + rsp.imp_uid
-            msg += '상점 거래 ID : ' + rsp.merchant_uid
-            msg += '결제 금액 : ' + rsp.paid_amount
-            msg += '카드 승인번호 : ' + rsp.apply_num
-            alert(msg)
+            // let msg = '결제가 완료되었습니다.'
+            // msg += '고유ID : ' + rsp.imp_uid
+            // msg += '상점 거래 ID : ' + rsp.merchant_uid
+            // msg += '결제 금액 : ' + rsp.paid_amount
+            // msg += '카드 승인번호 : ' + rsp.apply_num
+            // alert(msg)
+            alert(rsp.paymentDate)
+            let data = {
+              zip: this.zip,
+              detailAddress: this.detailAddress,
+              getterName: this.getterName,
+              getterPhoneNumber: this.getterPhoneNumber,
+              deliveryMessage: this.deliveryMessage
+            }
+
+            axios.post('/api/buyData', data)
+                .then((res)=>{
+                  console.log(res);
+                })
+                .catch((err)=>{
+                  console.log(err)
+                });
+
             window.location.href = 'http://localhost:8081/itemBuy/buyComplete'
           } else {
             let msg = '결제에 실패하였습니다.'
@@ -204,6 +221,16 @@ export default {
       } else {
         this.buyCheck = true
       }
+    }
+  },
+  watch: {
+    getterPhoneNumber(val) {
+      const reg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+      if(reg.exec(val)!==null) {
+        this.getterPhoneNumber = this.getterPhoneNumber.slice(0,-1);
+        alert("숫자만 입력해주세요")
+      }
+      return this.getterPhoneNumber=this.getterPhoneNumber.replace(/[^-\.0-9]/g,'');
     }
   }
 }
